@@ -1,0 +1,145 @@
+<div id="contenitoreGenerale">
+    <div class="contitoreCard">
+        @if(cartaPc.numero !== undefined && cartaPc.simbolo !==undefined){
+        <div class="carta-front">
+            
+                @switch(cartaPc.simbolo) {
+                @case (0) {
+                <div class="seme">♠</div>
+                }
+
+                @case (1) {
+                <div class="seme">♣</div>
+                }
+
+                @case (2) {
+                <div class="rosso seme">♦</div>
+                }
+
+                @case (3) {
+                <div class="rosso seme">♥</div>
+                }
+
+                @default {
+                <div>Simbolo non valido</div>
+                }
+                }
+
+            
+            @switch (cartaPc.numero) {
+                @case (13){
+                <div class="numero">K</div>
+                }
+
+                @case (12){
+                <div class="numero">Q</div>
+                }
+
+                @case (11){
+                <div class="numero">J</div>
+                }
+
+                @default{
+                <div class="numero">{{cartaUtente.numero}}</div>
+                }
+                }
+        </div>
+        }
+        <div class="card">
+            <svg xml:space="preserve" style="enable-background: new 0 0 16 16" viewBox="0 0 16 16" y="0px" x="0px"
+                id="Layer_1_1_" version="1.1" class="img">
+                <path d="M12,9H8H4c-2.209,0-4,1.791-4,4v3h16v-3C16,10.791,14.209,9,12,9z"></path>
+                <path d="M12,5V4c0-2.209-1.791-4-4-4S4,1.791,4,4v1c0,2.209,1.791,4,4,4S12,7.209,12,5z"></path>
+            </svg>
+
+            <div class="text">
+                <span class="heading">Utente_PC</span>
+                <p class="info">Punteggio: {{punteggio2}}</p>
+                <div class="country">
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
+                        viewBox="0 0 24 24" class="svg-country">
+                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                        <line y2="15" x2="4" y1="22" x1="4"></line>
+                    </svg>
+                    <span>Italy</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="mazzo-wrapper" (click)="distribuisciCarta()">
+        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
+        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
+        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
+        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
+        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
+        <div class="mazzo"><img class="card-back" src="/carte-poker-retro.jpg" alt="">
+        </div>
+    </div>
+    <div class="contitoreCard">
+        @if(cartaUtente.numero !== undefined && cartaUtente.simbolo !==undefined){
+        <div class="carta-front">
+            @switch(cartaUtente.simbolo) {
+            @case (0) {
+            <div class="seme">♠</div>
+            }
+
+            @case (1) {
+            <div class="seme">♣</div>
+            }
+
+            @case (2) {
+            <div class="rosso seme">♦</div>
+            }
+
+            @case (3) {
+            <div class="rosso seme">♥</div>
+            }
+
+            @default {
+            <div>Simbolo non valido</div>
+            }
+            }
+
+            @switch (cartaUtente.numero) {
+            @case (13){
+            <div class="numero">K</div>
+            }
+
+            @case (12){
+            <div class="numero">Q</div>
+            }
+
+            @case (11){
+            <div class="numero">J</div>
+            }
+
+            @default{
+            <div class="numero">{{cartaUtente.numero}}</div>
+            }
+            }
+        </div>
+        }
+        <div class="card">
+            <svg xml:space="preserve" style="enable-background: new 0 0 16 16" viewBox="0 0 16 16" y="0px" x="0px"
+                id="Layer_1_1_" version="1.1" class="img">
+                <path d="M12,9H8H4c-2.209,0-4,1.791-4,4v3h16v-3C16,10.791,14.209,9,12,9z"></path>
+                <path d="M12,5V4c0-2.209-1.791-4-4-4S4,1.791,4,4v1c0,2.209,1.791,4,4,4S12,7.209,12,5z"></path>
+            </svg>
+
+            <div class="text">
+                <span class="heading">Utente</span>
+                <p class="info">Punteggio: {{punteggio1}}</p>
+                <div class="country">
+                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
+                        viewBox="0 0 24 24" class="svg-country">
+                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                        <line y2="15" x2="4" y1="22" x1="4"></line>
+                    </svg>
+                    <span>Italy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
