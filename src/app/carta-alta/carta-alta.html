@@ -2,47 +2,51 @@
     <div class="contitoreCard">
         @if(cartaPc.numero !== undefined && cartaPc.simbolo !==undefined){
         <div class="carta-front">
-            
-                @switch(cartaPc.simbolo) {
-                @case (0) {
-                <div class="seme">♠</div>
-                }
 
-                @case (1) {
-                <div class="seme">♣</div>
-                }
+            @switch(cartaPc.simbolo) {
+            @case (0) {
+            <div class="seme">♠</div>
+            }
 
-                @case (2) {
-                <div class="rosso seme">♦</div>
-                }
+            @case (1) {
+            <div class="seme">♣</div>
+            }
 
-                @case (3) {
-                <div class="rosso seme">♥</div>
-                }
+            @case (2) {
+            <div class="rosso seme">♦</div>
+            }
 
-                @default {
-                <div>Simbolo non valido</div>
-                }
-                }
+            @case (3) {
+            <div class="rosso seme">♥</div>
+            }
 
-            
+            @default {
+            <div>Simbolo non valido</div>
+            }
+            }
+
+
             @switch (cartaPc.numero) {
-                @case (13){
-                <div class="numero">K</div>
-                }
+            @case (13){
+            <div class="numero">K</div>
+            }
 
-                @case (12){
-                <div class="numero">Q</div>
-                }
+            @case (12){
+            <div class="numero">Q</div>
+            }
 
-                @case (11){
-                <div class="numero">J</div>
-                }
+            @case (11){
+            <div class="numero">J</div>
+            }
 
-                @default{
-                <div class="numero">{{cartaUtente.numero}}</div>
-                }
-                }
+            @case(1){
+            <div class="numero">A</div>
+            }
+
+            @default{
+            <div class="numero">{{cartaPc.numero}}</div>
+            }
+            }
         </div>
         }
         <div class="card">
@@ -61,20 +65,21 @@
                         <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
                         <line y2="15" x2="4" y1="22" x1="4"></line>
                     </svg>
-                    <span>Italy</span>
+                    <span>Spazio</span>
                 </div>
             </div>
         </div>
 
     </div>
-    <div id="mazzo-wrapper" (click)="distribuisciCarta()">
-        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
-        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
-        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
-        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
-        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" /></div>
-        <div class="mazzo"><img class="card-back" src="/carte-poker-retro.jpg" alt="">
-        </div>
+    <div id="mazzo-wrapper">
+        @if(this.mazzo.length !== 0){
+        <div class="mazzo" (click)="distribuisciCarta()"><img class="card-back" src="/carte-poker-retro.jpg" alt="background carta" ></div>
+            }
+        @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
+        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
+        }
+        
+        
     </div>
     <div class="contitoreCard">
         @if(cartaUtente.numero !== undefined && cartaUtente.simbolo !==undefined){
@@ -112,6 +117,10 @@
 
             @case (11){
             <div class="numero">J</div>
+            }
+
+            @case(1){
+            <div class="numero">A</div>
             }
 
             @default{

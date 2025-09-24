@@ -1,24 +1,21 @@
-* {
-  padding: 0px;
-  margin: 0px;
-  box-sizing: border-box;
-}
+
 
 #contenitoreGenerale {
   display: flex;
-  align-items: center;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
   gap: 50px;
+  background-color: #048004;
+  padding: 30px 60px;
 }
 
 #mazzo-wrapper {
   position: relative;
-  width: 190px;
-  height: 254px;
+  width: 100%;
+  height: calc(100%/3);
   align-self: flex-start;
-  margin-left: 40px ;
+  
 }
 
 .mazzo {
@@ -26,8 +23,7 @@
   box-sizing: border-box;
   width: 190px;
   height: 254px;
-  border: 1px solid white;
-  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  box-shadow: 6px 10px 30px rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(6px);
   border-radius: 17px;
   text-align: center;
@@ -41,30 +37,72 @@
 .mazzo:nth-child(1) {
   top: 0px;
   left: 0px;
-  z-index: 5;
+  z-index: 12;
 }
 
 .mazzo:nth-child(2) {
   top: 2px;
   left: 2px;
-  z-index: 4;
+  z-index: 11;
 }
 
 .mazzo:nth-child(3) {
   top: 4px;
   left: 4px;
-  z-index: 3;
+  z-index: 10;
 }
 
 .mazzo:nth-child(4) {
   top: 6px;
   left: 6px;
-  z-index: 2;
+  z-index: 9;
 }
 
 .mazzo:nth-child(5) {
   top: 8px;
   left: 8px;
+  z-index: 8;
+}
+
+.mazzo:nth-child(6) {
+  top: 10px;
+  left: 10px;
+  z-index: 7;
+}
+
+.mazzo:nth-child(7) {
+  top: 12px;
+  left: 12px;
+  z-index: 6;
+}
+
+.mazzo:nth-child(8) {
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+}
+
+.mazzo:nth-child(9) {
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+}
+
+.mazzo:nth-child(10) {
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+}
+
+.mazzo:nth-child(11) {
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+.mazzo:nth-child(12) {
+  top: 22px;
+  left: 22px;
   z-index: 1;
 }
 
@@ -74,14 +112,16 @@
 }
 
 
-.mazzo:active {
+.mazzo:first-child:active {
   transform: scale(0.95) rotateZ(1.7deg);
 }
 
 .contitoreCard {
-
-  height: 254px;
+  width: 100%;
+  height: calc(100%/3);
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 200px;
 }
 
@@ -93,6 +133,7 @@
   box-sizing: border-box;
   width: 190px;
   height: 254px;
+  background-color: white;
   border: 1px solid white;
   box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(6px);
@@ -102,10 +143,6 @@
   user-select: none;
   font-weight: bolder;
   color: black;
-}
-
-.punteggio {
-  align-self: flex-end;
 }
 
 .card {
