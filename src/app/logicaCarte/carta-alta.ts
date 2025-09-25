@@ -1,4 +1,4 @@
-import { Card } from "../app/campo-gioco/interfaccia/card";
+import { Card } from "../interfaccia/card";
 
 export class CartaAlta {
       cartaUtente: Card = {};

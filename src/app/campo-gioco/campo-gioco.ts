@@ -1,6 +1,6 @@
-import { Component, LOCALE_ID } from '@angular/core';
-import { Card } from './interfaccia/card';
-import { CartaAlta } from '../../logicaCarte/carta-alta';
+import { Component} from '@angular/core';
+import { Card } from '../interfaccia/card';
+import { CartaAlta } from '../logicaCarte/carta-alta';
 
 @Component({
   selector: 'app-campo-gioco',
@@ -9,9 +9,24 @@ import { CartaAlta } from '../../logicaCarte/carta-alta';
   styleUrl: './campo-gioco.css'
 })
 export class CampoGioco {
-
+  //mettere un if per vedere il gioco e in base  aquesto attribiusci metodi e attributi degli ogg
   cartaAltaLogica:CartaAlta= new CartaAlta;
-  
+
+  //var che rappresenta la carta utente 
+  semeCartaUtente!:Card;
+  numeroCartaUtente!:Card[];
+  punteggioUtente!:number;
+
+  //var che rappresenta la carta PC
+  semeCartaPc!:Card;
+  numeroCartaPc!:Card[];
+  punteggioPc!:number;
+
+  //variabile che rappresenta il vincitore
+  flagVincitore!:number;
+
+  //array per far vedere che il mazzo sta diminuendo
+  numeroCarteVisualizzazioneMazzo!:number[]; 
   mazzo: Card[] = [];
   
   ngOnInit() {

@@ -2,8 +2,8 @@ import { Card } from "./card";
 
 
 export interface combinazioneMax {
-    combo?:number;
-    cards?:Card[];
+    combo:number;
+    cards:Card[];
 }
 
 /*LEGGENDA COMBO = 
