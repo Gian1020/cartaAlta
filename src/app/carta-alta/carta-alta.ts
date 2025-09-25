@@ -19,7 +19,11 @@ export class CartaAlta {
   registroCarteUtente: Card[] = [];
   registroCartePc: Card[] = [];
   contatoreClick:number = 0;
-  numeroCarteVisualizzazioneMazzo:number[]=[1,2,3,4,5,6,7,8,9,10,11,12]
+  numeroCarteVisualizzazioneMazzo:number[]=[1,2,3,4,5,6,7,8,9,10,11,12];
+  chiHaVinto:number= 0;
+  vincitore!:string;
+  country!:string;
+  punteggioVincitore!:string;
 
   ngOnInit() {
     this.creaCarte();
@@ -55,10 +59,8 @@ export class CartaAlta {
       this.mazzo.shift();
       this.registroCartePc.push(this.cartaPc);
       this.sfoltisciMazzo();
-      this.checkWinner(this.cartaUtente, this.cartaPc);
+      this.checkWinnerRound(this.cartaUtente, this.cartaPc);
     }
-    
-    
   }
 
   sfoltisciMazzo(){
@@ -67,7 +69,11 @@ export class CartaAlta {
     }
   }
 
-  checkWinner(carta1: Card, carta2: Card) {
+  checkWinnerRound(carta1: Card, carta2: Card) {
+
+    if(this.contatoreClick==26){
+      this.checkWinner();
+    }
 
     if (carta1.numero !== undefined && carta2.numero !== undefined && carta1.simbolo !== undefined && carta2.simbolo !== undefined) {
       if (carta1.numero > carta2.numero) {
@@ -89,7 +95,33 @@ export class CartaAlta {
         this.punteggio2++;
       };
     }
+    
+  }
 
+  checkWinner(){
+    this.punteggio1 = 13;
+    this.punteggio2 = 13;
+
+    if(this.punteggio1>this.punteggio2){
+      this.chiHaVinto=1;
+      this.vincitore="Utente";
+      this.punteggioVincitore="Punteggio: "+`${this.punteggio1}`;
+      this.country= "Italy";
+    }
+    else if(this.punteggio1<this.punteggio2){
+      this.chiHaVinto=2;
+      this.vincitore="Utente_PC";
+      this.punteggioVincitore="Punteggio: "+`${this.punteggio2}`;
+      this.country= "Spazio";
+    }
+    
+
+    else if((this.punteggio1==this.punteggio2)) {
+      this.chiHaVinto=3;
+      this.vincitore="Patta";
+      this.punteggioVincitore="Punteggio: PARI";
+      
+    }
   }
 }
 
