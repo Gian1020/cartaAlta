@@ -1,9 +1,9 @@
 <div id="contenitoreGenerale">
     <div class="contitoreCard">
-        @if(cartaPc.numero !== undefined && cartaPc.simbolo !==undefined){
+        @if(cartaAltaLogica.cartaPc.numero !== undefined && cartaAltaLogica.cartaPc.simbolo !==undefined){
         <div class="carta-front">
 
-            @switch(cartaPc.simbolo) {
+            @switch(cartaAltaLogica.cartaPc.simbolo) {
             @case (0) {
             <div class="seme">♠</div>
             }
@@ -26,7 +26,7 @@
             }
 
 
-            @switch (cartaPc.numero) {
+            @switch (cartaAltaLogica.cartaPc.numero) {
             @case (13){
             <div class="numero">K</div>
             }
@@ -44,14 +44,14 @@
             }
 
             @default{
-            <div class="numero">{{cartaPc.numero}}</div>
+            <div class="numero">{{cartaAltaLogica.cartaPc.numero}}</div>
             }
             }
         </div>
         }
 
-        @if(chiHaVinto==0){
-        <div class="card">
+        @if(cartaAltaLogica.chiHaVinto==0){
+        <div class="card card-pc">
             <svg xml:space="preserve" style="enable-background: new 0 0 16 16" viewBox="0 0 16 16" y="0px" x="0px"
                 id="Layer_1_1_" version="1.1" class="img">
                 <path d="M12,9H8H4c-2.209,0-4,1.791-4,4v3h16v-3C16,10.791,14.209,9,12,9z"></path>
@@ -60,7 +60,7 @@
 
             <div class="text">
                 <span class="heading">Utente_PC</span>
-                <p class="info">Punteggio: {{punteggio2}}</p>
+                <p class="info">Punteggio: {{cartaAltaLogica.punteggio2}}</p>
                 <div class="country">
                     <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
                         viewBox="0 0 24 24" class="svg-country">
@@ -79,16 +79,16 @@
         @if(this.mazzo.length !== 0){
         <div class="mazzo" (click)="distribuisciCarta()"><img class="card-back" src="/carte-poker-retro.jpg" alt="background carta" ></div>
             }
-        @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
+        @for(carte of cartaAltaLogica.numeroCarteVisualizzazioneMazzo; track $index){
         <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
         }
         
         
     </div>
     <div class="contitoreCard">
-        @if(cartaUtente.numero !== undefined && cartaUtente.simbolo !==undefined){
+        @if(cartaAltaLogica.cartaUtente.numero !== undefined && cartaAltaLogica.cartaUtente.simbolo !==undefined){
         <div class="carta-front">
-            @switch(cartaUtente.simbolo) {
+            @switch(cartaAltaLogica.cartaUtente.simbolo) {
             @case (0) {
             <div class="seme">♠</div>
             }
@@ -110,7 +110,7 @@
             }
             }
 
-            @switch (cartaUtente.numero) {
+            @switch (cartaAltaLogica.cartaUtente.numero) {
             @case (13){
             <div class="numero">K</div>
             }
@@ -128,14 +128,14 @@
             }
 
             @default{
-            <div class="numero">{{cartaUtente.numero}}</div>
+            <div class="numero">{{cartaAltaLogica.cartaUtente.numero}}</div>
             }
             }
         </div>
         }
-         @switch (chiHaVinto){
+         @switch (cartaAltaLogica.chiHaVinto){
             @case(0){
-        <div class="card">
+        <div class="card card-utente">
             <svg xml:space="preserve" style="enable-background: new 0 0 16 16" viewBox="0 0 16 16" y="0px" x="0px"
                 id="Layer_1_1_" version="1.1" class="img">
                 <path d="M12,9H8H4c-2.209,0-4,1.791-4,4v3h16v-3C16,10.791,14.209,9,12,9z"></path>
@@ -144,7 +144,7 @@
 
             <div class="text">
                 <span class="heading">Utente</span>
-                <p class="info">Punteggio: {{punteggio1}}</p>
+                <p class="info">Punteggio: {{cartaAltaLogica.punteggio1}}</p>
                 <div class="country">
                     <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
                         viewBox="0 0 24 24" class="svg-country">
@@ -157,7 +157,7 @@
         </div>}
         @default
         {
-            <div class="card cardWinner">
+            <div class="card cardWinner" [class]="cartaAltaLogica.classeCard">
             <svg xml:space="preserve" style="enable-background: new 0 0 16 16" viewBox="0 0 16 16" y="0px" x="0px"
                 id="Layer_1_1_" version="1.1" class="img">
                 <path d="M12,9H8H4c-2.209,0-4,1.791-4,4v3h16v-3C16,10.791,14.209,9,12,9z"></path>
@@ -165,15 +165,15 @@
             </svg>
 
             <div class="text">
-                <span class="heading headingWinner">{{vincitore}}</span>
-                <p class="info infoWinner"> {{punteggioVincitore}}</p>
+                <span class="heading headingWinner">{{cartaAltaLogica.vincitore}}</span>
+                <p class="info infoWinner"> {{cartaAltaLogica.punteggioVincitore}}</p>
                 <div class="country">
                     <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
                         viewBox="0 0 24 24" class="svg-country">
                         <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
                         <line y2="15" x2="4" y1="22" x1="4"></line>
                     </svg>
-                    <span class="countryWinner">{{country}}</span>
+                    <span class="countryWinner">{{cartaAltaLogica.country}}</span>
                 </div>
             </div>
         </div>}

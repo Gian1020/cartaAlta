@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CartaAlta } from './carta-alta/carta-alta';
+import { CampoGioco } from './campo-gioco/campo-gioco';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CartaAlta],
+  imports: [RouterOutlet, CampoGioco],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
