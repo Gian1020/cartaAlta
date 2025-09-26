@@ -1,7 +1,7 @@
-import { Card } from "./card";
+import { Card } from "./Card";
 
 
-export interface combinazioneMax {
+export interface CombinazioneMax {
     combo:number;
     cards:Card[];
 }

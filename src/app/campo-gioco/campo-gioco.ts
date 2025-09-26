@@ -1,6 +1,7 @@
-import { Component} from '@angular/core';
-import { Card } from '../interfaccia/card';
+import { Component } from '@angular/core';
+import { Card } from './interfaccia/Card';
 import { CartaAlta } from '../logicaCarte/carta-alta';
+import { Poker3 } from '../logicaCarte/poker3';
 
 @Component({
   selector: 'app-campo-gioco',
@@ -9,26 +10,101 @@ import { CartaAlta } from '../logicaCarte/carta-alta';
   styleUrl: './campo-gioco.css'
 })
 export class CampoGioco {
-  //mettere un if per vedere il gioco e in base  aquesto attribiusci metodi e attributi degli ogg
-  cartaAltaLogica:CartaAlta= new CartaAlta;
+  giocoScelto!: string;
+  mazzo: Card[] = [];
+  classeCard!:string;
 
   //var che rappresenta la carta utente 
-  semeCartaUtente!:Card;
-  numeroCartaUtente!:Card[];
-  punteggioUtente!:number;
+  carteUtente!: Card[];
+  numeroCartaPc!:number|undefined;
+  semeCartaPc!:number|undefined;
+  punteggioUtente!: number;
 
   //var che rappresenta la carta PC
-  semeCartaPc!:Card;
-  numeroCartaPc!:Card[];
-  punteggioPc!:number;
+  cartePc!: Card[];
+  semeCartaUtente!:number|undefined;
+  numeroCartaUtente!:number|undefined;
+  punteggioPc!: number;
 
   //variabile che rappresenta il vincitore
-  flagVincitore!:number;
+  flagVincitore!: number;
+
+  punteggioVincitore!:string;
+  vincitore!:string;
+
+  //variabile funzione click mazzo
+  funzione!:any;
 
   //array per far vedere che il mazzo sta diminuendo
-  numeroCarteVisualizzazioneMazzo!:number[]; 
-  mazzo: Card[] = [];
+  numeroCarteVisualizzazioneMazzo!: number[];
+
+  condizione!:number;
+
+  valoreCondizione!:number;
+
   
+
+  inserisciGiocoScelto(gioco: string) {
+    //mettere un if per vedere il gioco e in base a questo attribiusci metodi e attributi degli ogg
+    if (gioco.toLocaleLowerCase() == "cartaalta") {
+      let cartaAlta: CartaAlta = new CartaAlta;
+
+      //var che rappresenta la carta utente 
+      this.punteggioUtente=cartaAlta.punteggio1;
+
+      //var che rappresenta la carta PC
+      this.punteggioPc=cartaAlta.punteggio2;
+
+      //variabile che rappresenta il vincitore
+      this.flagVincitore=cartaAlta.chiHaVinto;
+
+      //variabil che fa visualizzare il punteggio
+      this.punteggioVincitore=cartaAlta.punteggioVincitore;
+      this.vincitore=cartaAlta.vincitore;
+
+      //array per far vedere che il mazzo sta diminuendo
+      this.numeroCarteVisualizzazioneMazzo=cartaAlta.numeroCarteVisualizzazioneMazzo;
+    
+      //classe cardWinner
+      this.classeCard=cartaAlta.classeCard;
+
+      //metodo che fa cliccare le carte
+      this.funzione=cartaAlta.distribuisciCarta(this.mazzo);
+
+      this.condizione=this.mazzo.length;
+
+      this.valoreCondizione=0;
+
+      
+    }
+
+    else if(gioco.toLocaleLowerCase() == "pokertre"){
+      let poker: Poker3 = new Poker3;
+
+      //var che rappresenta la carta utente 
+      this.punteggioUtente=poker.punteggioUtene;
+
+      //var che rappresenta la carta PC
+      this.punteggioPc=poker.punteggioPc;
+
+      //variabile che rappresenta il vincitore
+      this.flagVincitore=poker.flagWinnerRound;
+
+      //variabile che rappresenta il vincitore
+      this.punteggioVincitore=poker.chiHaVinto;
+      this.vincitore=poker.chiHaVinto;
+
+      //funzione per click distribuzione carte
+      this.funzione=poker.distribuisci(this.mazzo);
+
+      //array per far vedere che il mazzo sta diminuendo
+      //this.numeroCarteVisualizzazioneMazzo
+    
+      this.condizione=this.mazzo.length;
+
+      this.valoreCondizione=6;
+    }
+  }
   ngOnInit() {
     this.creaCarte();
     this.mischia();
@@ -52,7 +128,7 @@ export class CampoGioco {
     }
   }
 
-  
+
 }
 
 

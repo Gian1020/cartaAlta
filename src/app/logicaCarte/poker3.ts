@@ -1,14 +1,21 @@
-import { Card } from "../interfaccia/card";
-import { combinazioneMax } from "../interfaccia/comboMaxPoker";
+import { Card } from "../campo-gioco/interfaccia/Card";
+import { CombinazioneMax } from "../campo-gioco/interfaccia/ComboMaxPoker";
 
 export class Poker3 {
     cartaUtente: Card = {};
     cartaPc: Card = {};
     carteUtente: Card[] = [];
     cartePc: Card[] = [];
-    comboMaxUtente!: combinazioneMax;
-    comboMaxPc!: combinazioneMax;
-    flag: number = 0;
+    comboMaxUtente!: CombinazioneMax;
+    comboMaxPc!: CombinazioneMax;
+    flagWinnerRound: number = 0;
+    flagVincitorePartita:number=0;
+    chiHaVinto:string="";
+    punteggioVincitore:string="";
+    country:string="";
+    punteggioUtene!: number;
+    punteggioPc!: number;
+    classeCard:string="";
 
     /*  0 --> nessun vincitore ancora decretetato
         1 --> vincitore Utente 
@@ -27,8 +34,8 @@ export class Poker3 {
         }
     }
 
-    controlloMaxPunteggio(chiControlliamo: Card[]): combinazioneMax {
-
+    controlloMaxPunteggio(chiControlliamo: Card[]): CombinazioneMax {
+        //inserire il fatto che l asso puo fare la scala con A K Q
         chiControlliamo.every(el => el !== undefined);
         chiControlliamo.sort((a, b) => (a.numero ?? 0) - (b.numero ?? 0));
 
@@ -85,10 +92,8 @@ export class Poker3 {
                     combo: 0,
                     cards: chiControlliamo
                 }
-
         }
     }
-
 
     controlloCoppia(mano: Card[]) {
         for (let i = 0; i < mano.length - 1; i++) {
@@ -136,46 +141,107 @@ export class Poker3 {
         else return false;
     }
 
-    checkWinner(comboMaxUtente: combinazioneMax, comboMaxPc: combinazioneMax) {
+    vincitoreFinale(){
+    if(this.punteggioUtene>this.punteggioPc){
+      this.flagVincitorePartita=1;
+      this.chiHaVinto="Utente";
+      this.punteggioVincitore="Punteggio: "+`${this.punteggioUtene}`;
+      this.country= "Italy";
+      this.classeCard = "card-utente";
+    }
+    else if(this.punteggioUtene<this.punteggioPc){
+      this.flagVincitorePartita=2;
+      this.chiHaVinto="Utente_PC";
+      this.punteggioVincitore="Punteggio: "+`${this.punteggioPc}`;
+      this.country= "Spazio";
+      this.classeCard = "card-pc";
+    }
+    
+
+    else if((this.punteggioUtene==this.punteggioPc)) {
+      this.flagVincitorePartita=3;
+      this.chiHaVinto="Patta";
+      this.punteggioVincitore="Punteggio: PARI";
+      this.classeCard = "card-pc";
+    }
+  }
+
+    checkWinner(comboMaxUtente: CombinazioneMax, comboMaxPc: CombinazioneMax) {
         switch (true) {
             case (comboMaxUtente.combo > comboMaxPc.combo): {
-                this.flag = 1;
+                this.flagWinnerRound = 1;
+                this.punteggioUtene++;
                 break;
             }
 
             case (comboMaxUtente.combo < comboMaxPc.combo): {
-                this.flag = 2;
+                this.flagWinnerRound = 2;
+                this.punteggioPc++;
                 break;
             }
+            // aggiungere controllo sul seme della scala reale
 
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 5):
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 4):
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 3):
-            case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 2):
                 {
                     if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1] > comboMaxUtente.cards[comboMaxUtente.cards.length - 1]) {
-                        this.flag = 1;
+                        this.flagWinnerRound = 1;
+                        this.punteggioUtene++;
                     }
-                    else this.flag = 2;
+                    else {
+                        this.flagWinnerRound = 2;
+                        this.punteggioPc++;
+                    }
                     break;
                 }
 
+            case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 2):
+                {
+                    if (comboMaxUtente.cards[0].simbolo !== undefined && comboMaxPc.cards[0].simbolo != undefined) {
+                        if (comboMaxUtente.cards[0].simbolo > comboMaxPc.cards[0].simbolo) {
+                            this.flagWinnerRound = 1;
+                            this.punteggioUtene++;
+                        }
+                        else if (comboMaxUtente.cards[0].simbolo < comboMaxPc.cards[0].simbolo) {
+                            this.flagWinnerRound = 2;
+                            this.punteggioPc++;
+                        }
+                        else {
+                            if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1] > comboMaxUtente.cards[comboMaxUtente.cards.length - 1]) {
+                                this.flagWinnerRound = 1;
+                                this.punteggioUtene++;
+                            }
+                            else {
+                                this.flagWinnerRound = 2;
+                                this.punteggioPc++;
+                            }
+                        }
+                    }
+                    break;
+                }
+
+
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 1): {
                 if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1] > comboMaxUtente.cards[comboMaxUtente.cards.length - 1]) {
-                    this.flag = 1;
+                    this.flagWinnerRound = 1;
+                    this.punteggioUtene++;
                 }
                 else if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1] > comboMaxUtente.cards[comboMaxUtente.cards.length - 1]) {
-                    this.flag = 2;
+                    this.flagWinnerRound = 2;
+                    this.punteggioPc++;
                 }
                 else {
                     if (comboMaxUtente.cards[0] > comboMaxPc.cards[0]) {
-                        this.flag = 1;
+                        this.flagWinnerRound = 1;
+                        this.punteggioUtene++;
                     }
                     else if (comboMaxUtente.cards[0] < comboMaxPc.cards[0]) {
-                        this.flag = 2;
+                        this.flagWinnerRound = 2;
+                        this.punteggioPc++;
                     }
                     else {
-                        this.flag = 3;
+                        this.flagWinnerRound = 3;
                     }
                 }
                 break;
@@ -183,34 +249,38 @@ export class Poker3 {
 
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 0): {
                 if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1] > comboMaxUtente.cards[comboMaxUtente.cards.length - 1]) {
-                    this.flag = 1;
+                    this.flagWinnerRound = 1;
+                    this.punteggioUtene++;
                 }
                 else if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1] > comboMaxUtente.cards[comboMaxUtente.cards.length - 1]) {
-                    this.flag = 2;
+                    this.flagWinnerRound = 2;
+                    this.punteggioPc++;
                 }
                 else {
                     if (comboMaxUtente.cards[1] > comboMaxPc.cards[1]) {
-                        this.flag = 1;
+                        this.flagWinnerRound = 1;
+                        this.punteggioUtene++;
                     }
                     else if (comboMaxUtente.cards[1] < comboMaxPc.cards[1]) {
-                        this.flag = 2;
+                        this.flagWinnerRound = 2;
+                        this.punteggioPc++;
                     }
                     else {
                         if (comboMaxUtente.cards[0] > comboMaxPc.cards[0]) {
-                            this.flag = 1;
+                            this.flagWinnerRound = 1;
+                            this.punteggioUtene++;
                         }
                         else if (comboMaxUtente.cards[0] < comboMaxPc.cards[0]) {
-                            this.flag = 2;
+                            this.flagWinnerRound = 2;
+                            this.punteggioPc++;
                         }
-                        else{
-                            this.flag=3;
+                        else {
+                            this.flagWinnerRound = 3;
                         }
                     }
                 }
                 break;
             }
-
-
         }
     }
 }

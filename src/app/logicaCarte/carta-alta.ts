@@ -1,8 +1,8 @@
-import { Card } from "../interfaccia/card";
+import { Card } from "../campo-gioco/interfaccia/Card";
 
 export class CartaAlta {
-      cartaUtente: Card = {};
-      cartaPc: Card = {};
+      cartaUtente: Card[] = [];
+      cartaPc: Card[] = [];
       magCartaGiocatore: number = 0;
       contatore: number = 0;
       punteggio1: number = 0;
@@ -20,14 +20,14 @@ export class CartaAlta {
     distribuisciCarta(mazzo:Card[]) {
     if(mazzo.length !== 0) {
       this.contatoreClick++;
-      this.cartaUtente = mazzo[0];
+      this.cartaUtente.push(mazzo[0]);
       mazzo.shift();
-      this.registroCarteUtente.push(this.cartaUtente);
-      this.cartaPc = mazzo[0];
+      this.registroCarteUtente.push(this.cartaUtente[0]);
+      this.cartaPc.push(mazzo[0]);
       mazzo.shift();
-      this.registroCartePc.push(this.cartaPc);
+      this.registroCartePc.push(this.cartaPc[0]);
       this.sfoltisciMazzo();
-      this.checkWinnerRound(this.cartaUtente, this.cartaPc);
+      this.checkWinnerRound(this.cartaUtente[0], this.cartaPc[0]);
     }
   }
 
