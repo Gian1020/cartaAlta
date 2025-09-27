@@ -1,55 +1,57 @@
 <div id="contenitoreGenerale">
     <div class="contitoreCard">
-        @for(carte of cartePc; track $index){
-        @if(carte.numero !== undefined && carte.simbolo!==undefined){
-        <div class="carta-front">
+        <div class="mano">
+            @for(carte of cartePc; track $index){
+            @if(carte.numero !== undefined && carte.simbolo!==undefined){
+            <div class="carta-front">
 
-            @switch(carte.simbolo) {
-            @case (0) {
-            <div class="seme">♠</div>
-            }
+                @switch(carte.simbolo) {
+                @case (0) {
+                <div class="seme">♠</div>
+                }
 
-            @case (1) {
-            <div class="seme">♣</div>
-            }
+                @case (1) {
+                <div class="seme">♣</div>
+                }
 
-            @case (2) {
-            <div class="rosso seme">♦</div>
-            }
+                @case (2) {
+                <div class="rosso seme">♦</div>
+                }
 
-            @case (3) {
-            <div class="rosso seme">♥</div>
-            }
+                @case (3) {
+                <div class="rosso seme">♥</div>
+                }
 
-            @default {
-            <div>Simbolo non valido</div>
-            }
-            }
+                @default {
+                <div>Simbolo non valido</div>
+                }
+                }
 
+                @switch (carte.numero) {
+                @case (13){
+                <div class="numero">K</div>
+                }
 
-            @switch (carte.numero) {
-            @case (13){
-            <div class="numero">K</div>
-            }
+                @case (12){
+                <div class="numero">Q</div>
+                }
 
-            @case (12){
-            <div class="numero">Q</div>
-            }
+                @case (11){
+                <div class="numero">J</div>
+                }
 
-            @case (11){
-            <div class="numero">J</div>
-            }
+                @case(14){
+                <div class="numero">A</div>
+                }
 
-            @case(1){
-            <div class="numero">A</div>
-            }
+                @default{
+                <div class="numero">{{carte.numero}}</div>
+                }
+                }
+            </div>
 
-            @default{
-            <div class="numero">{{carte.numero}}</div>
-            }
-            }
+            }}
         </div>
-        }}
 
         @if(flagVincitore==0){
         <div class="card card-pc">
@@ -63,11 +65,7 @@
                 <span class="heading">Utente_PC</span>
                 <p class="info">Punteggio: {{punteggioPc}}</p>
                 <div class="country">
-                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
-                        viewBox="0 0 24 24" class="svg-country">
-                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-                        <line y2="15" x2="4" y1="22" x1="4"></line>
-                    </svg>
+
                     <span>Spazio</span>
                 </div>
             </div>
@@ -78,7 +76,7 @@
     </div>
     <div id="mazzo-wrapper">
         @if(this.mazzo.length > valoreCondizione){
-        <div class="mazzo" (click)="funzione"><img class="card-back" src="/carte-poker-retro.jpg"
+        <div class="mazzo" (click)="funzione()"><img class="card-back" src="/carte-poker-retro.jpg"
                 alt="background carta"></div>
         }
         @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
@@ -88,54 +86,57 @@
 
     </div>
     <div class="contitoreCard">
-        @for(carte of carteUtente; track $index){
-        @if(carte.numero!=undefined && carte.simbolo!=undefined){
-        <div class="carta-front">
-            @switch(carte.simbolo) {
-            @case (0) {
-            <div class="seme">♠</div>
-            }
+        <div class="mano">
+            @for(carte of carteUtente; track $index){
+            @if(carte.numero!=undefined && carte.simbolo!=undefined){
 
-            @case (1) {
-            <div class="seme">♣</div>
-            }
+            <div class="carta-front">
+                @switch(carte.simbolo) {
+                @case (0) {
+                <div class="seme">♠</div>
+                }
 
-            @case (2) {
-            <div class="rosso seme">♦</div>
-            }
+                @case (1) {
+                <div class="seme">♣</div>
+                }
 
-            @case (3) {
-            <div class="rosso seme">♥</div>
-            }
+                @case (2) {
+                <div class="rosso seme">♦</div>
+                }
 
-            @default {
-            <div>Simbolo non valido</div>
-            }
-            }
+                @case (3) {
+                <div class="rosso seme">♥</div>
+                }
 
-            @switch (carte.numero) {
-            @case (13){
-            <div class="numero">K</div>
-            }
+                @default {
+                <div>Simbolo non valido</div>
+                }
+                }
 
-            @case (12){
-            <div class="numero">Q</div>
-            }
+                @switch (carte.numero) {
+                @case (13){
+                <div class="numero">K</div>
+                }
 
-            @case (11){
-            <div class="numero">J</div>
-            }
+                @case (12){
+                <div class="numero">Q</div>
+                }
 
-            @case(1){
-            <div class="numero">A</div>
-            }
+                @case (11){
+                <div class="numero">J</div>
+                }
 
-            @default{
-            <div class="numero">{{carte.numero}}</div>
-            }
-            }
+                @case(1){
+                <div class="numero">A</div>
+                }
+
+                @default{
+                <div class="numero">{{carte.numero}}</div>
+                }
+                }
+            </div>
+            }}
         </div>
-        }}
         @switch (flagVincitore){
         @case(0){
         <div class="card card-utente">
@@ -149,11 +150,7 @@
                 <span class="heading">Utente</span>
                 <p class="info">Punteggio: {{punteggioUtente}}</p>
                 <div class="country">
-                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#f2e5d7" fill="none"
-                        viewBox="0 0 24 24" class="svg-country">
-                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-                        <line y2="15" x2="4" y1="22" x1="4"></line>
-                    </svg>
+
                     <span>Italy</span>
                 </div>
             </div>

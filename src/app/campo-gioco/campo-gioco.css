@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
-
   background-color: #048004;
   padding: 30px 60px;
 }
@@ -114,23 +113,24 @@
 }
 
 .contitoreCard {
+  
   width: 100%;
   height: calc(100%/3);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 500px;
+  justify-content: center;
+  gap: 300px;
   padding-right: 50px;
 }
 
 .carta-front {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+  gap: 30px;
   box-sizing: border-box;
-  width: 190px;
-  height: 254px;
+  min-width: 190px;
+  min-height: 254px;
   background-color: white;
   border: 1px solid white;
   box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
@@ -140,11 +140,11 @@
   transition: all 0.5s;
   user-select: none;
   font-weight: bolder;
-  color: black;
-
 }
 
 .card {
+  position:absolute;
+  right: 80px;
   background-color: var(--bc);
   color: var(--clr);
   padding: 2rem 2.5rem;
@@ -152,8 +152,8 @@
   box-shadow: 0 10px 40px -1px var(--bc-al);
   outline: 2px solid var(--bc);
   outline-offset: 4px;
-  width: 190px;
-  height: 254px;
+  min-width: 190px;
+  min-height: 254px;
   transition: 0.3s ese-in-out;
   display: flex;
   flex-direction: column;
@@ -263,4 +263,11 @@
   height: 70%;
   font-size: 70px;
   font-weight: bold;
+}
+
+.mano{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }

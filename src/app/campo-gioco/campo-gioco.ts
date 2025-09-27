@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Card } from './interfaccia/Card';
 import { CartaAlta } from '../logicaCarte/carta-alta';
 import { Poker3 } from '../logicaCarte/poker3';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-campo-gioco',
@@ -12,107 +13,114 @@ import { Poker3 } from '../logicaCarte/poker3';
 export class CampoGioco {
   giocoScelto!: string;
   mazzo: Card[] = [];
-  classeCard!:string;
+  classeCard!: string;
 
   //var che rappresenta la carta utente 
   carteUtente!: Card[];
-  numeroCartaPc!:number|undefined;
-  semeCartaPc!:number|undefined;
+  numeroCartaPc!: number | undefined;
+  semeCartaPc!: number | undefined;
   punteggioUtente!: number;
 
   //var che rappresenta la carta PC
   cartePc!: Card[];
-  semeCartaUtente!:number|undefined;
-  numeroCartaUtente!:number|undefined;
+  semeCartaUtente!: number | undefined;
+  numeroCartaUtente!: number | undefined;
   punteggioPc!: number;
 
   //variabile che rappresenta il vincitore
   flagVincitore!: number;
 
-  punteggioVincitore!:string;
-  vincitore!:string;
+  punteggioVincitore!: string;
+  vincitore!: string;
 
   //variabile funzione click mazzo
-  funzione!:any;
+  funzione!: any;
 
   //array per far vedere che il mazzo sta diminuendo
   numeroCarteVisualizzazioneMazzo!: number[];
 
-  condizione!:number;
+  condizione!: number;
 
-  valoreCondizione!:number;
+  valoreCondizione!: number;
 
-  
+  logica: string = '';
 
-  inserisciGiocoScelto(gioco: string) {
-    //mettere un if per vedere il gioco e in base a questo attribiusci metodi e attributi degli ogg
-    if (gioco.toLocaleLowerCase() == "cartaalta") {
-      let cartaAlta: CartaAlta = new CartaAlta;
+  constructor(
+    private router: Router,
+    public cartaAlta: CartaAlta,
+    public poker: Poker3
+  ) {}
 
-      //var che rappresenta la carta utente 
-      this.punteggioUtente=cartaAlta.punteggio1;
+  caricaLogicaCartaAlta() {
+    this.carteUtente = this.cartaAlta.cartaUtente
 
-      //var che rappresenta la carta PC
-      this.punteggioPc=cartaAlta.punteggio2;
+    this.cartePc = this.cartaAlta.cartaPc;
 
-      //variabile che rappresenta il vincitore
-      this.flagVincitore=cartaAlta.chiHaVinto;
+    //var che rappresenta la carta utente 
+    this.punteggioUtente = this.cartaAlta.punteggio1;
 
-      //variabil che fa visualizzare il punteggio
-      this.punteggioVincitore=cartaAlta.punteggioVincitore;
-      this.vincitore=cartaAlta.vincitore;
+    //var che rappresenta la carta PC
+    this.punteggioPc = this.cartaAlta.punteggio2;
 
-      //array per far vedere che il mazzo sta diminuendo
-      this.numeroCarteVisualizzazioneMazzo=cartaAlta.numeroCarteVisualizzazioneMazzo;
-    
-      //classe cardWinner
-      this.classeCard=cartaAlta.classeCard;
+    //variabile che rappresenta il vincitore
+    this.flagVincitore = this.cartaAlta.chiHaVinto;
 
-      //metodo che fa cliccare le carte
-      this.funzione=cartaAlta.distribuisciCarta(this.mazzo);
+    //variabil che fa visualizzare il punteggio
+    this.punteggioVincitore = this.cartaAlta.punteggioVincitore;
+    this.vincitore = this.cartaAlta.vincitore;
 
-      this.condizione=this.mazzo.length;
+    //array per far vedere che il mazzo sta diminuendo
+    this.numeroCarteVisualizzazioneMazzo = this.cartaAlta.numeroCarteVisualizzazioneMazzo;
 
-      this.valoreCondizione=0;
+    //classe cardWinner
+    this.classeCard = this.cartaAlta.classeCard;
 
-      
-    }
+    //metodo che fa cliccare le carte
+    this.funzione = () => {
+      this.cartaAlta.distribuisciCarta(this.mazzo);
+    };
 
-    else if(gioco.toLocaleLowerCase() == "pokertre"){
-      let poker: Poker3 = new Poker3;
+    this.condizione = this.mazzo.length;
 
-      //var che rappresenta la carta utente 
-      this.punteggioUtente=poker.punteggioUtene;
-
-      //var che rappresenta la carta PC
-      this.punteggioPc=poker.punteggioPc;
-
-      //variabile che rappresenta il vincitore
-      this.flagVincitore=poker.flagWinnerRound;
-
-      //variabile che rappresenta il vincitore
-      this.punteggioVincitore=poker.chiHaVinto;
-      this.vincitore=poker.chiHaVinto;
-
-      //funzione per click distribuzione carte
-      this.funzione=poker.distribuisci(this.mazzo);
-
-      //array per far vedere che il mazzo sta diminuendo
-      //this.numeroCarteVisualizzazioneMazzo
-    
-      this.condizione=this.mazzo.length;
-
-      this.valoreCondizione=6;
-    }
+    this.valoreCondizione = 0;
   }
-  ngOnInit() {
-    this.creaCarte();
-    this.mischia();
+
+  caricaLogicaPoker3() {
+    this.carteUtente = this.poker.carteUtente;
+
+    this.cartePc = this.poker.cartePc;
+
+    //var che rappresenta la carta utente 
+    this.punteggioUtente = this.poker.punteggioUtene;
+
+    //var che rappresenta la carta PC
+    this.punteggioPc = this.poker.punteggioPc;
+
+    //variabile che rappresenta il vincitore
+    this.flagVincitore = this.poker.flagWinnerRound;
+
+    //variabile che rappresenta il vincitore
+    this.punteggioVincitore = this.poker.chiHaVinto;
+    this.vincitore = this.poker.chiHaVinto;
+
+    //funzione per click distribuzione carte
+    this.funzione = () => {
+      this.poker.distribuisci(this.mazzo);
+    };
+
+    //array per far vedere che il mazzo sta diminuendo
+    //this.numeroCarteVisualizzazioneMazzo
+
+    this.condizione = this.mazzo.length;
+
+    this.valoreCondizione = 6;
   }
+
+
 
   creaCarte() {
     for (let semi = 0; semi < 4; semi++) {
-      for (let numeri = 1; numeri <= 13; numeri++) {
+      for (let numeri = 2; numeri <= 14; numeri++) {
         let carta: Card = { numero: numeri, simbolo: semi };
         this.mazzo.push(carta);
       }
@@ -127,8 +135,22 @@ export class CampoGioco {
       this.mazzo[indexCasuale] = varAppoggio;
     }
   }
+  ngOnInit() {
+    this.creaCarte();
+    this.mischia();
 
+    const currentRoute = this.router.url;
 
+    if (currentRoute.includes('cartaAlta')) {
+      this.logica = 'cartaAlta';
+      this.caricaLogicaCartaAlta();
+    }
+    else if (currentRoute.includes('poker3')) {
+      this.logica = 'poker3';
+      this.caricaLogicaPoker3();
+    }
+  }
 }
+
 
 
