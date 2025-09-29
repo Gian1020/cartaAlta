@@ -1,11 +1,11 @@
 <div id="contenitoreGenerale">
     <div class="contitoreCard">
         <div class="mano">
-            @for(carte of cartePc; track $index){
-            @if(carte.numero !== undefined && carte.simbolo!==undefined){
+            @for(carta of cartePc; track $index){
+            @if(carta.numero !== undefined && carta.simbolo!==undefined){
             <div class="carta-front">
 
-                @switch(carte.simbolo) {
+                @switch(carta.simbolo) {
                 @case (0) {
                 <div class="seme">♠</div>
                 }
@@ -27,7 +27,7 @@
                 }
                 }
 
-                @switch (carte.numero) {
+                @switch (carta.numero) {
                 @case (13){
                 <div class="numero">K</div>
                 }
@@ -45,7 +45,7 @@
                 }
 
                 @default{
-                <div class="numero">{{carte.numero}}</div>
+                <div class="numero">{{carta.numero}}</div>
                 }
                 }
             </div>
@@ -87,11 +87,11 @@
     </div>
     <div class="contitoreCard">
         <div class="mano">
-            @for(carte of carteUtente; track $index){
-            @if(carte.numero!=undefined && carte.simbolo!=undefined){
+            @for(carta of carteUtente; track $index){
+            @if(carta.numero!=undefined && carta.simbolo!=undefined){
 
             <div class="carta-front">
-                @switch(carte.simbolo) {
+                @switch(carta.simbolo) {
                 @case (0) {
                 <div class="seme">♠</div>
                 }
@@ -113,7 +113,7 @@
                 }
                 }
 
-                @switch (carte.numero) {
+                @switch (carta.numero) {
                 @case (13){
                 <div class="numero">K</div>
                 }
@@ -126,12 +126,12 @@
                 <div class="numero">J</div>
                 }
 
-                @case(1){
+                @case(14){
                 <div class="numero">A</div>
                 }
 
                 @default{
-                <div class="numero">{{carte.numero}}</div>
+                <div class="numero">{{carta.numero}}</div>
                 }
                 }
             </div>

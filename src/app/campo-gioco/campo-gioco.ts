@@ -49,11 +49,15 @@ export class CampoGioco {
     private router: Router,
     public cartaAlta: CartaAlta,
     public poker: Poker3
-  ) {}
+  ) { }
 
   caricaLogicaCartaAlta() {
-    this.carteUtente = this.cartaAlta.cartaUtente
+    console.log(this.cartaAlta);
 
+    //var che rappresenta le carte del utente
+    this.carteUtente = this.cartaAlta.cartaUtente;
+
+    //var che rappresenta le carte del pc
     this.cartePc = this.cartaAlta.cartaPc;
 
     //var che rappresenta la carta utente 
@@ -78,6 +82,30 @@ export class CampoGioco {
     //metodo che fa cliccare le carte
     this.funzione = () => {
       this.cartaAlta.distribuisciCarta(this.mazzo);
+      //var che rappresenta le carte del utente
+      this.carteUtente = this.cartaAlta.cartaUtente;
+
+      //var che rappresenta le carte del pc
+      this.cartePc = this.cartaAlta.cartaPc;
+
+      //var che rappresenta la carta utente 
+      this.punteggioUtente = this.cartaAlta.punteggio1;
+
+      //var che rappresenta la carta PC
+      this.punteggioPc = this.cartaAlta.punteggio2;
+
+      //variabile che rappresenta il vincitore
+      this.flagVincitore = this.cartaAlta.chiHaVinto;
+
+      //variabil che fa visualizzare il punteggio
+      this.punteggioVincitore = this.cartaAlta.punteggioVincitore;
+      this.vincitore = this.cartaAlta.vincitore;
+
+      //array per far vedere che il mazzo sta diminuendo
+      this.numeroCarteVisualizzazioneMazzo = this.cartaAlta.numeroCarteVisualizzazioneMazzo;
+
+      //classe cardWinner
+      this.classeCard = this.cartaAlta.classeCard;
     };
 
     this.condizione = this.mazzo.length;
@@ -86,6 +114,10 @@ export class CampoGioco {
   }
 
   caricaLogicaPoker3() {
+
+    console.log(this.poker);
+
+    //var che contiene 
     this.carteUtente = this.poker.carteUtente;
 
     this.cartePc = this.poker.cartePc;
@@ -101,11 +133,32 @@ export class CampoGioco {
 
     //variabile che rappresenta il vincitore
     this.punteggioVincitore = this.poker.chiHaVinto;
+
     this.vincitore = this.poker.chiHaVinto;
 
     //funzione per click distribuzione carte
     this.funzione = () => {
       this.poker.distribuisci(this.mazzo);
+
+      this.carteUtente = this.poker.carteUtente;
+
+      this.cartePc = this.poker.cartePc;
+
+      if (this.poker.flagWinnerRound != 3) {
+        //var che rappresenta la carta utente 
+        this.punteggioUtente = this.poker.punteggioUtene;
+
+        //var che rappresenta la carta PC
+        this.punteggioPc = this.poker.punteggioPc;}
+
+        //variabile che rappresenta il vincitore
+        this.flagVincitore = this.poker.flagWinnerRound;
+
+
+        //variabile che rappresenta il vincitore
+        this.punteggioVincitore = this.poker.chiHaVinto;
+        this.vincitore = this.poker.chiHaVinto;
+      
     };
 
     //array per far vedere che il mazzo sta diminuendo

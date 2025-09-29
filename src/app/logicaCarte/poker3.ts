@@ -4,8 +4,6 @@ import { CombinazioneMax } from "../campo-gioco/interfaccia/ComboMaxPoker";
 
 @Injectable({ providedIn: 'root' })
 export class Poker3 {
-    cartaUtente: Card = {};
-    cartaPc: Card = {};
     carteUtente: Card[] = [];
     cartePc: Card[] = [];
     comboMaxUtente!: CombinazioneMax;
@@ -15,8 +13,8 @@ export class Poker3 {
     chiHaVinto: string = "";
     punteggioVincitore: string = "";
     country: string = "";
-    punteggioUtene!: number;
-    punteggioPc!: number;
+    punteggioUtene: number = 0;
+    punteggioPc: number = 0;
     classeCard: string = "";
 
     /*  0 --> nessun vincitore ancora decretetato
@@ -27,53 +25,74 @@ export class Poker3 {
 
     distribuisci(mazzo: Card[]) {
         if (mazzo.length > 5) {
-            for (let i = 0; i < 3; i++) {
-                this.carteUtente.push(mazzo[0]);
-                mazzo.shift();
-                this.cartePc.push(mazzo[0]);
-                mazzo.shift();
-            }
+            this.cartePc = [
+                {numero:4,
+                 simbolo:0   
+
+                },
+                {numero:3,
+                 simbolo:0
+
+                }, {numero:5,
+                    simbolo:0
+
+                }];
+            this.carteUtente = [{
+                numero:4,
+                simbolo:0
+            },{
+                numero:2,
+                simbolo:0
+            },
+            {
+                numero:3,
+                simbolo:0
+            },
+        ];
+            // for (let i = 0; i < 3; i++) {
+            //     //contatoreclick++ 
+            //     // carta utente
+            //     const cartaU = mazzo.shift()!;
+            //     this.carteUtente.push(cartaU);
+
+
+            //     // carta pc
+            //     const cartaP = mazzo.shift()!;
+            //     this.cartePc.push(cartaP);
+            // }
+            this.comboMaxUtente=this.controlloMaxPunteggio(this.carteUtente);
+            this.comboMaxPc=this.controlloMaxPunteggio(this.cartePc);
+
+            this.checkWinner(this.comboMaxUtente, this.comboMaxPc);
+
         }
     }
 
+    //da rifare
     controlloMaxPunteggio(carteGiocatoreDaControllare: Card[]): CombinazioneMax {
         //inserire il fatto che l asso puo fare la scala con A K Q
         let chiControlliamo = carteGiocatoreDaControllare.sort((a, b) => (a.numero ?? 0) - (b.numero ?? 0));
         chiControlliamo.every(el => el !== undefined);
 
         switch (true) {
-
-            case this.controlloSeScala(chiControlliamo) && this.controlloSimbolo(chiControlliamo):
+            case (this.controlloSeScala(chiControlliamo) && this.controlloSimbolo(chiControlliamo)):
                 return {
                     combo: 5,
                     cards: chiControlliamo
                 }
-
+            
             case (chiControlliamo[0].numero == chiControlliamo[1].numero && chiControlliamo[0].numero == chiControlliamo[2].numero):
                 return {
                     combo: 4,
                     cards: chiControlliamo
                 }
 
-
+            
             case (this.controlloSeScala(chiControlliamo)):
                 if (chiControlliamo[chiControlliamo.length - 1].numero == 14) {
                     [chiControlliamo[chiControlliamo.length - 2], chiControlliamo[chiControlliamo.length - 1]] =
                         [chiControlliamo[chiControlliamo.length - 1], chiControlliamo[chiControlliamo.length - 2]];
                 }
-                return {
-                    combo: 3,
-                    cards: chiControlliamo
-                }
-
-
-            case (this.controlloSeScala(chiControlliamo)):
-                return {
-                    combo: 3,
-                    cards: chiControlliamo
-                }
-
-            case (this.controlloSeScala(chiControlliamo)):
                 return {
                     combo: 3,
                     cards: chiControlliamo
@@ -127,17 +146,19 @@ export class Poker3 {
 
     controlloSeScala(mano: Card[]): boolean {
         //controllo scala tranne caso A 2 3
+        let contatore = 0;
         for (let i = 0; i < mano.length - 1; i++) {
-            if ((mano[i].numero ?? 0) == (mano[i + 1].numero ?? 0) + 1) {
-                return true;
+            if ((mano[i].numero ?? 0) == (mano[i + 1].numero ?? 0) - 1) {
+                contatore++;
             }
         }
+        if (contatore == 2) return true;
+        let arr = [];
         for (let carte of mano) {
-            let arr = [];
             arr.push(carte.numero);
-            if (arr.includes(14) && arr.includes(2) && arr.includes(3)) {
-                return false;
-            }
+        }
+        if (arr.includes(14) && arr.includes(2) && arr.includes(3)) {
+            return true;
         }
 
         return false;
@@ -150,7 +171,7 @@ export class Poker3 {
                 contatore++
             }
         }
-        if (contatore = mano.length - 1) {
+        if (contatore === mano.length - 1) {
             return true;
         }
         else return false;
@@ -182,43 +203,54 @@ export class Poker3 {
     }
 
     checkWinner(comboMaxUtente: CombinazioneMax, comboMaxPc: CombinazioneMax) {
+        console.log(comboMaxUtente,"utente");
+        console.log(comboMaxPc, "pc");
+        
+        
         switch (true) {
+            //controllo combo --> vincitore Utente
             case (comboMaxUtente.combo > comboMaxPc.combo): {
+                console.log("Ha vinto l utente");
+                
                 this.flagWinnerRound = 1;
                 this.punteggioUtene++;
                 break;
             }
-
+            //controllo combo --> vincitore Pc
             case (comboMaxUtente.combo < comboMaxPc.combo): {
+                console.log("Ha vinto il pc");
                 this.flagWinnerRound = 2;
                 this.punteggioPc++;
                 break;
             }
-            // aggiungere controllo sul seme della scala reale
-
+            //controllo combo --> pari
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 5):
                 {
                     if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1].numero! > comboMaxPc.cards[comboMaxPc.cards.length - 1].numero!) {
+                        console.log("Ha vinto l utente con scala Reale");
                         this.flagWinnerRound = 1;
                         this.punteggioUtene++;
                     }
                     else if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1].numero == comboMaxPc.cards[comboMaxPc.cards.length - 1].numero) {
                         if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1].simbolo! > comboMaxPc.cards[comboMaxPc.cards.length - 1].simbolo!) {
+                            console.log("Ha vinto l utente con scala Reale");
                             this.flagWinnerRound = 1;
                             this.punteggioUtene++;
                         }
                         else {
+                            console.log("Ha vinto l Pc con scala Reale");
                             this.flagWinnerRound = 2;
                             this.punteggioPc++;
                         }
                     }
 
                     else {
+                        console.log("Ha vinto l Pc con scala Reale");
                         this.flagWinnerRound = 2;
                         this.punteggioPc++;
                     }
                     break;
-                }
+                }/*
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 4):
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 3):
                 {
@@ -316,7 +348,7 @@ export class Poker3 {
                     }
                 }
                 break;
-            }
+            }*/
         }
     }
 }

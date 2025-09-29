@@ -1,13 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Card } from "../campo-gioco/interfaccia/Card";
-import { BehaviorSubject } from "rxjs";
-import { StatoCarta } from "../campo-gioco/interfaccia/oggettoCartaAlta";
+
 @Injectable({ providedIn: 'root' })
 
 export class CartaAlta {
   cartaUtente: Card[] = [];
   cartaPc: Card[] = [];
-  contatore: number = 0;
   punteggio1: number = 0;
   punteggio2: number = 0;
   registroCarteUtente: Card[] = [];
@@ -20,27 +18,11 @@ export class CartaAlta {
   punteggioVincitore!: string;
   classeCard: string = "";
 
-  /*
-   private _stato = new BehaviorSubject<StatoCarta>({
-    cartaUtente: [],
-    cartaPc: [],
-    contatore: 0,
-    punteggio1: 0,
-    punteggio2: 0,
-    registroCarteUtente: [],
-    registroCartePc: [],
-    contatoreClick: 0,
-    numeroCarteVisualizzazioneMazzo: [1,2,3,4,5,6,7,8,9,10,11,12],
-    chiHaVinto: 0,
-    vincitore: '',
-    country: '',
-    punteggioVincitore: '',
-    classeCard: ''
-  });
-  */
-
   distribuisciCarta(mazzo: Card[]) {
     if (mazzo.length === 0) return;
+    
+      this.cartaUtente=[];
+      this.cartaPc=[];
       this.contatoreClick++;
 
       // carta utente
@@ -51,10 +33,10 @@ export class CartaAlta {
       // carta pc
       const cartaP = mazzo.shift()!;
       this.cartaPc.push(cartaP);
-      this.registroCartePc.push(this.cartaPc[0]);
+      this.registroCartePc.push(cartaP);
 
       this.sfoltisciMazzo();
-      this.checkWinnerRound(this.cartaUtente[0], this.cartaPc[0]);
+      this.checkWinnerRound(this.cartaUtente[this.cartaUtente.length-1], this.cartaPc[this.cartaPc.length-1]);
   }
 
   sfoltisciMazzo() {
@@ -64,24 +46,29 @@ export class CartaAlta {
   }
 
   checkWinnerRound(carta1: Card, carta2: Card) {
-
-    if (this.contatoreClick == 26) {
-      this.checkWinner();
-    }
-
+   
     if (carta1.numero! > carta2.numero!) {
       this.punteggio1++;
+     
     }
-    else if (carta1.numero == carta2.numero) {
+    else if (carta1.numero! === carta2.numero!) {
       if (carta1.simbolo! > carta2.simbolo!) {
         this.punteggio1++;
+     
       }
-      else { this.punteggio2++; }
+      else {
+      this.punteggio2++;
+   
+    }
     }
     else {
       this.punteggio2++;
+   
     }
-
+    if (this.contatoreClick == 26) {
+      this.checkWinner();
+    }
+     
   }
 
   checkWinner() {
@@ -91,6 +78,7 @@ export class CartaAlta {
       this.punteggioVincitore = "Punteggio: " + `${this.punteggio1}`;
       this.country = "Italy";
       this.classeCard = "card-utente";
+         
     }
     else if (this.punteggio1 < this.punteggio2) {
       this.chiHaVinto = 2;
@@ -98,6 +86,7 @@ export class CartaAlta {
       this.punteggioVincitore = "Punteggio: " + `${this.punteggio2}`;
       this.country = "Spazio";
       this.classeCard = "card-pc";
+           
     }
 
 
@@ -106,6 +95,6 @@ export class CartaAlta {
       this.vincitore = "Patta";
       this.punteggioVincitore = "Punteggio: PARI";
       this.classeCard = "card-pc";
-    }
+      }
   }
 }
