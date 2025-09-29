@@ -16,6 +16,7 @@ export class Poker3 {
     punteggioUtene: number = 0;
     punteggioPc: number = 0;
     classeCard: string = "";
+    contatoreClick:number=0;
 
     /*  0 --> nessun vincitore ancora decretetato
         1 --> vincitore Utente 
@@ -24,54 +25,60 @@ export class Poker3 {
     */
 
     distribuisci(mazzo: Card[]) {
+        this.cartePc=[];
+        this.carteUtente=[];
         if (mazzo.length > 5) {
-            this.cartePc = [
-                {numero:4,
-                 simbolo:0   
+            this.contatoreClick++;
+            console.log(this.contatoreClick,"click");
+            
+           /* this.cartePc = [
+                {
+                    numero: 4,
+                    simbolo: 0
 
                 },
-                {numero:3,
-                 simbolo:0
+                {
+                    numero: 3,
+                    simbolo: 0
 
-                }, {numero:5,
-                    simbolo:0
+                }, {
+                    numero: 5,
+                    simbolo: 0
 
                 }];
             this.carteUtente = [{
-                numero:4,
-                simbolo:0
-            },{
-                numero:2,
-                simbolo:0
+                numero: 4,
+                simbolo: 0
+            }, {
+                numero: 2,
+                simbolo: 0
             },
             {
-                numero:3,
-                simbolo:0
+                numero: 3,
+                simbolo: 0
             },
-        ];
-            // for (let i = 0; i < 3; i++) {
-            //     //contatoreclick++ 
-            //     // carta utente
-            //     const cartaU = mazzo.shift()!;
-            //     this.carteUtente.push(cartaU);
+            ];*/
+            for (let i = 0; i < 3; i++) {
+                
+                // carta utente
+                const cartaU = mazzo.shift()!;
+                this.carteUtente.push(cartaU);
 
-
-            //     // carta pc
-            //     const cartaP = mazzo.shift()!;
-            //     this.cartePc.push(cartaP);
-            // }
-            this.comboMaxUtente=this.controlloMaxPunteggio(this.carteUtente);
-            this.comboMaxPc=this.controlloMaxPunteggio(this.cartePc);
-
-            this.checkWinner(this.comboMaxUtente, this.comboMaxPc);
+                // carta pc
+                const cartaP = mazzo.shift()!;
+                this.cartePc.push(cartaP);
+            }
+            //funzione che controlla la vi
+            this.checkWinnerRound(this.controlloMaxPunteggio(this.carteUtente), this.controlloMaxPunteggio(this.cartePc));
+            this.vincitoreFinale();
 
         }
     }
 
-    //da rifare
     controlloMaxPunteggio(carteGiocatoreDaControllare: Card[]): CombinazioneMax {
         //inserire il fatto che l asso puo fare la scala con A K Q
-        let chiControlliamo = carteGiocatoreDaControllare.sort((a, b) => (a.numero ?? 0) - (b.numero ?? 0));
+        let chiControlliamo = [...carteGiocatoreDaControllare];
+        chiControlliamo.sort((a, b) => (a.numero ?? 0) - (b.numero ?? 0));
         chiControlliamo.every(el => el !== undefined);
 
         switch (true) {
@@ -80,14 +87,14 @@ export class Poker3 {
                     combo: 5,
                     cards: chiControlliamo
                 }
-            
+
             case (chiControlliamo[0].numero == chiControlliamo[1].numero && chiControlliamo[0].numero == chiControlliamo[2].numero):
                 return {
                     combo: 4,
                     cards: chiControlliamo
                 }
 
-            
+            //controllare e gestire meglio il caso A 2 3
             case (this.controlloSeScala(chiControlliamo)):
                 if (chiControlliamo[chiControlliamo.length - 1].numero == 14) {
                     [chiControlliamo[chiControlliamo.length - 2], chiControlliamo[chiControlliamo.length - 1]] =
@@ -144,6 +151,7 @@ export class Poker3 {
     }
 
 
+
     controlloSeScala(mano: Card[]): boolean {
         //controllo scala tranne caso A 2 3
         let contatore = 0;
@@ -178,7 +186,8 @@ export class Poker3 {
     }
 
     vincitoreFinale() {
-        if (this.punteggioUtene > this.punteggioPc) {
+        if (this.contatoreClick==8) {
+            if(this.punteggioUtene > this.punteggioPc){
             this.flagVincitorePartita = 1;
             this.chiHaVinto = "Utente";
             this.punteggioVincitore = "Punteggio: " + `${this.punteggioUtene}`;
@@ -199,19 +208,22 @@ export class Poker3 {
             this.chiHaVinto = "Patta";
             this.punteggioVincitore = "Punteggio: PARI";
             this.classeCard = "card-pc";
-        }
+        }}
     }
 
-    checkWinner(comboMaxUtente: CombinazioneMax, comboMaxPc: CombinazioneMax) {
-        console.log(comboMaxUtente,"utente");
+    checkWinnerRound(comboMaxUtente: CombinazioneMax, comboMaxPc: CombinazioneMax) {
+        console.log(comboMaxUtente, "utente");
         console.log(comboMaxPc, "pc");
+        console.log(this.punteggioUtene);
+        console.log(this.punteggioPc);
         
         
+        //da controllare con log tutti i pareggi
         switch (true) {
             //controllo combo --> vincitore Utente
             case (comboMaxUtente.combo > comboMaxPc.combo): {
                 console.log("Ha vinto l utente");
-                
+
                 this.flagWinnerRound = 1;
                 this.punteggioUtene++;
                 break;
@@ -243,14 +255,13 @@ export class Poker3 {
                             this.punteggioPc++;
                         }
                     }
-
                     else {
                         console.log("Ha vinto l Pc con scala Reale");
                         this.flagWinnerRound = 2;
                         this.punteggioPc++;
                     }
                     break;
-                }/*
+                }
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 4):
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 3):
                 {
@@ -285,7 +296,6 @@ export class Poker3 {
                             this.punteggioPc++;
                         }
                     }
-
                     break;
                 }
 
@@ -348,7 +358,7 @@ export class Poker3 {
                     }
                 }
                 break;
-            }*/
+            }
         }
     }
 }

@@ -3,53 +3,9 @@
         <div class="mano">
             @for(carta of cartePc; track $index){
             @if(carta.numero !== undefined && carta.simbolo!==undefined){
-            <div class="carta-front">
-
-                @switch(carta.simbolo) {
-                @case (0) {
-                <div class="seme">♠</div>
-                }
-
-                @case (1) {
-                <div class="seme">♣</div>
-                }
-
-                @case (2) {
-                <div class="rosso seme">♦</div>
-                }
-
-                @case (3) {
-                <div class="rosso seme">♥</div>
-                }
-
-                @default {
-                <div>Simbolo non valido</div>
-                }
-                }
-
-                @switch (carta.numero) {
-                @case (13){
-                <div class="numero">K</div>
-                }
-
-                @case (12){
-                <div class="numero">Q</div>
-                }
-
-                @case (11){
-                <div class="numero">J</div>
-                }
-
-                @case(14){
-                <div class="numero">A</div>
-                }
-
-                @default{
-                <div class="numero">{{carta.numero}}</div>
-                }
-                }
-            </div>
-
+                <div class="carta-front">
+                    <img src="{{carta.code}}.png" alt="">
+                </div>
             }}
         </div>
 
@@ -91,49 +47,7 @@
             @if(carta.numero!=undefined && carta.simbolo!=undefined){
 
             <div class="carta-front">
-                @switch(carta.simbolo) {
-                @case (0) {
-                <div class="seme">♠</div>
-                }
-
-                @case (1) {
-                <div class="seme">♣</div>
-                }
-
-                @case (2) {
-                <div class="rosso seme">♦</div>
-                }
-
-                @case (3) {
-                <div class="rosso seme">♥</div>
-                }
-
-                @default {
-                <div>Simbolo non valido</div>
-                }
-                }
-
-                @switch (carta.numero) {
-                @case (13){
-                <div class="numero">K</div>
-                }
-
-                @case (12){
-                <div class="numero">Q</div>
-                }
-
-                @case (11){
-                <div class="numero">J</div>
-                }
-
-                @case(14){
-                <div class="numero">A</div>
-                }
-
-                @default{
-                <div class="numero">{{carta.numero}}</div>
-                }
-                }
+               <img src="{{carta.code}}.png" alt="">
             </div>
             }}
         </div>
@@ -173,7 +87,7 @@
                         <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
                         <line y2="15" x2="4" y1="22" x1="4"></line>
                     </svg>
-                    <span class="countryWinner">Italy</span>
+                    <span class="countryWinner">{{country}}</span>
                 </div>
             </div>
         </div>}

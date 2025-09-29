@@ -32,6 +32,7 @@ export class CampoGioco {
 
   punteggioVincitore!: string;
   vincitore!: string;
+  country!:string;
 
   //variabile funzione click mazzo
   funzione!: any;
@@ -51,8 +52,7 @@ export class CampoGioco {
     public poker: Poker3
   ) { }
 
-  caricaLogicaCartaAlta() {
-    console.log(this.cartaAlta);
+  aggiornaCartaAlta() {
 
     //var che rappresenta le carte del utente
     this.carteUtente = this.cartaAlta.cartaUtente;
@@ -67,45 +67,26 @@ export class CampoGioco {
     this.punteggioPc = this.cartaAlta.punteggio2;
 
     //variabile che rappresenta il vincitore
-    this.flagVincitore = this.cartaAlta.chiHaVinto;
+    this.flagVincitore = this.cartaAlta.flagVincitorePartita;
 
     //variabil che fa visualizzare il punteggio
     this.punteggioVincitore = this.cartaAlta.punteggioVincitore;
     this.vincitore = this.cartaAlta.vincitore;
+    this.country = this.cartaAlta.country;
 
     //array per far vedere che il mazzo sta diminuendo
     this.numeroCarteVisualizzazioneMazzo = this.cartaAlta.numeroCarteVisualizzazioneMazzo;
 
     //classe cardWinner
     this.classeCard = this.cartaAlta.classeCard;
+  }
 
+  caricaLogicaCartaAlta() {
+    this.aggiornaCartaAlta()
     //metodo che fa cliccare le carte
     this.funzione = () => {
       this.cartaAlta.distribuisciCarta(this.mazzo);
-      //var che rappresenta le carte del utente
-      this.carteUtente = this.cartaAlta.cartaUtente;
-
-      //var che rappresenta le carte del pc
-      this.cartePc = this.cartaAlta.cartaPc;
-
-      //var che rappresenta la carta utente 
-      this.punteggioUtente = this.cartaAlta.punteggio1;
-
-      //var che rappresenta la carta PC
-      this.punteggioPc = this.cartaAlta.punteggio2;
-
-      //variabile che rappresenta il vincitore
-      this.flagVincitore = this.cartaAlta.chiHaVinto;
-
-      //variabil che fa visualizzare il punteggio
-      this.punteggioVincitore = this.cartaAlta.punteggioVincitore;
-      this.vincitore = this.cartaAlta.vincitore;
-
-      //array per far vedere che il mazzo sta diminuendo
-      this.numeroCarteVisualizzazioneMazzo = this.cartaAlta.numeroCarteVisualizzazioneMazzo;
-
-      //classe cardWinner
-      this.classeCard = this.cartaAlta.classeCard;
+      this.aggiornaCartaAlta()
     };
 
     this.condizione = this.mazzo.length;
@@ -113,56 +94,49 @@ export class CampoGioco {
     this.valoreCondizione = 0;
   }
 
-  caricaLogicaPoker3() {
 
-    console.log(this.poker);
-
-    //var che contiene 
+  aggiornaPoker() {
     this.carteUtente = this.poker.carteUtente;
 
     this.cartePc = this.poker.cartePc;
 
-    //var che rappresenta la carta utente 
-    this.punteggioUtente = this.poker.punteggioUtene;
+    if (this.poker.flagWinnerRound != 3) {
+      //var che rappresenta la carta utente 
+      this.punteggioUtente = this.poker.punteggioUtene;
 
-    //var che rappresenta la carta PC
-    this.punteggioPc = this.poker.punteggioPc;
+      //var che rappresenta la carta PC
+      this.punteggioPc = this.poker.punteggioPc;
+    }
 
     //variabile che rappresenta il vincitore
-    this.flagVincitore = this.poker.flagWinnerRound;
+    this.flagVincitore = this.poker.flagVincitorePartita;
+
 
     //variabile che rappresenta il vincitore
     this.punteggioVincitore = this.poker.chiHaVinto;
-
     this.vincitore = this.poker.chiHaVinto;
+
+    this.classeCard=this.poker.classeCard;
+  }
+
+  caricaLogicaPoker3() {
+
+    console.log(this.poker);
+
+    this.aggiornaPoker();
 
     //funzione per click distribuzione carte
     this.funzione = () => {
       this.poker.distribuisci(this.mazzo);
 
-      this.carteUtente = this.poker.carteUtente;
+      this.aggiornaPoker();
 
-      this.cartePc = this.poker.cartePc;
-
-      if (this.poker.flagWinnerRound != 3) {
-        //var che rappresenta la carta utente 
-        this.punteggioUtente = this.poker.punteggioUtene;
-
-        //var che rappresenta la carta PC
-        this.punteggioPc = this.poker.punteggioPc;}
-
-        //variabile che rappresenta il vincitore
-        this.flagVincitore = this.poker.flagWinnerRound;
-
-
-        //variabile che rappresenta il vincitore
-        this.punteggioVincitore = this.poker.chiHaVinto;
-        this.vincitore = this.poker.chiHaVinto;
-      
     };
 
     //array per far vedere che il mazzo sta diminuendo
     //this.numeroCarteVisualizzazioneMazzo
+
+    
 
     this.condizione = this.mazzo.length;
 
@@ -174,7 +148,75 @@ export class CampoGioco {
   creaCarte() {
     for (let semi = 0; semi < 4; semi++) {
       for (let numeri = 2; numeri <= 14; numeri++) {
-        let carta: Card = { numero: numeri, simbolo: semi };
+        let carta: Card = { numero: numeri, simbolo: semi};
+        if(carta.simbolo==0){
+          if(carta.numero==14){
+            carta.code="AS";
+          }
+          else if(carta.numero == 13){
+            carta.code="KS";
+          }
+          else if(carta.numero== 12){
+            carta.code="QS";
+          }
+          else if(carta.numero==11){
+            carta.code = "JS";
+          }
+          else if(carta.numero! > 1 && carta.numero! < 11){
+            carta.code = carta.numero+"S";
+          }
+        }
+        else if(carta.simbolo==1){
+          if(carta.numero==14){
+            carta.code="AC";
+          }
+          else if(carta.numero == 13){
+            carta.code="KC";
+          }
+          else if(carta.numero== 12){
+            carta.code="QC";
+          }
+          else if(carta.numero==11){
+            carta.code = "JC";
+          }
+          else if(carta.numero! > 1 && carta.numero! < 11){
+            carta.code = carta.numero+"C";
+          }
+        }
+        else if(carta.simbolo==2){
+          if(carta.numero==14){
+            carta.code = "AD";
+          }
+          else if(carta.numero == 13){
+            carta.code = "KD";
+          }
+          else if(carta.numero== 12){
+            carta.code = "QD";
+          }
+          else if(carta.numero==11){
+            carta.code = "JD";
+          }
+          else if(carta.numero! > 1 && carta.numero! < 11){
+            carta.code = carta.numero+"D";
+          }
+        }
+        else{
+          if(carta.numero==14){
+            carta.code="AH";
+          }
+          else if(carta.numero == 13){
+            carta.code="KH";
+          }
+          else if(carta.numero== 12){
+            carta.code="QH";
+          }
+          else if(carta.numero==11){
+            carta.code = "JH";
+          }
+          else if(carta.numero! > 1 && carta.numero! < 11){
+            carta.code = carta.numero+"H";
+          }
+        }
         this.mazzo.push(carta);
       }
     }
