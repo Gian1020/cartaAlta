@@ -16,9 +16,14 @@ export class Poker3 {
     punteggioUtene: number = 0;
     punteggioPc: number = 0;
 
+    //commento della vittoria di ogni round
+    stringaComboRound!: string;
+    commentoVincitoreRound!:string;
+
     //variabile per blocare il click del mazzo
     contatoreClick: number = 0;
-    numeroCarteVisualizzazioneMazzo: number[] = [1,2,3,4,5,6,7,8,9,10,11];
+    numeroCarteVisualizzazioneMazzo: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    
 
     //variabili che servono per la card Winner
     flagVincitorePartita: number = 0;
@@ -45,19 +50,21 @@ export class Poker3 {
                 const cartaP = mazzo.shift()!;
                 this.cartePc.push(cartaP);
             }
-             this.sfoltisciMazzo() 
+            this.sfoltisciMazzo()
             //funzione che controlla la vitoria
             this.checkWinnerRound(this.controlloMaxPunteggio(this.carteUtente), this.controlloMaxPunteggio(this.cartePc));
+            
+            this.commentoVincitoreRound= "Ha vinto il giocatore "+ this.stringaComboRound +" il round numero " +this.contatoreClick;
 
             this.vincitoreFinale();
         }
     }
 
     sfoltisciMazzo() {
-    if (this.contatoreClick % 1 == 0) {
-      this.numeroCarteVisualizzazioneMazzo.pop();  
+        if (this.contatoreClick % 1 == 0) {
+            this.numeroCarteVisualizzazioneMazzo.pop();
+        }
     }
-  }
 
     controlloMaxPunteggio(carteGiocatoreDaControllare: Card[]): CombinazioneMax {
         let chiControlliamo = [...carteGiocatoreDaControllare];
@@ -69,39 +76,45 @@ export class Poker3 {
             case (this.controlloSeScala(chiControlliamo) && this.controlloSimbolo(chiControlliamo)):
                 return {
                     combo: 5,
-                    cards: chiControlliamo
+                    cards: chiControlliamo,
+                    nomeCombo: "Scala reale"
                 }
             //case tris
             case (chiControlliamo[0].numero == chiControlliamo[1].numero && chiControlliamo[0].numero == chiControlliamo[2].numero):
                 return {
                     combo: 4,
-                    cards: chiControlliamo
+                    cards: chiControlliamo,
+                    nomeCombo: "Tris"
                 }
             //case scala
             case (this.controlloSeScala(chiControlliamo)):
                 return {
                     combo: 3,
-                    cards: chiControlliamo
+                    cards: chiControlliamo,
+                    nomeCombo: "Scala"
                 }
             //case colore
             case (this.controlloSimbolo(chiControlliamo)):
                 return {
                     combo: 2,
-                    cards: chiControlliamo
+                    cards: chiControlliamo,
+                    nomeCombo:"Colore"
                 }
 
             //case coppia
             case (this.controlloCoppia(chiControlliamo)):
                 return {
                     combo: 1,
-                    cards: chiControlliamo
+                    cards: chiControlliamo,
+                    nomeCombo:"Coppia"
                 }
 
             //default carta alta
             default:
                 return {
                     combo: 0,
-                    cards: chiControlliamo
+                    cards: chiControlliamo,
+                    nomeCombo:"Carta Alta"
                 }
         }
     }
@@ -152,7 +165,7 @@ export class Poker3 {
 
     vincitoreFinale() {
         if (this.contatoreClick == 8) {
-            
+
             if (this.punteggioUtene > this.punteggioPc) {
                 this.flagVincitorePartita = 1;
                 this.chiHaVinto = "Utente";
@@ -182,11 +195,13 @@ export class Poker3 {
             //controllo combo --> vincitore Utente
             case (comboMaxUtente.combo > comboMaxPc.combo): {
                 this.punteggioUtene++;
+                this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
                 break;
             }
             //controllo combo --> vincitore Pc
             case (comboMaxUtente.combo < comboMaxPc.combo): {
                 this.punteggioPc++;
+                this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;
                 break;
             }
             //controllo combo --> pari
@@ -199,9 +214,11 @@ export class Poker3 {
                 {
                     if (comboMaxUtente.cards[0].numero! > comboMaxPc.cards[0].numero!) {
                         this.punteggioUtene++;
+                        this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
                     }
                     else if (comboMaxUtente.cards[0].numero! < comboMaxPc.cards[0].numero!) {
                         this.punteggioPc++;
+                        this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;;
                     }
                     break;
                 }
@@ -221,18 +238,22 @@ export class Poker3 {
             case (comboMaxUtente.combo == comboMaxPc.combo && comboMaxUtente.combo == 1): {
                 if (comboMaxUtente.cards[1].numero! > comboMaxPc.cards[1].numero!) {
                     this.punteggioUtene++;
+                    this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
                 }
                 else if (comboMaxUtente.cards[1].numero! < comboMaxPc.cards[1].numero!) {
                     this.punteggioPc++;
+                    this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;
                 }
                 else {
                     let valoreCheNonCoppiaUtente: number = this.trovaDiverso(comboMaxUtente.cards[0].numero!, comboMaxUtente.cards[1].numero!, comboMaxUtente.cards[2].numero!);
                     let valoreCheNonCoppiaPC: number = this.trovaDiverso(comboMaxPc.cards[0].numero!, comboMaxPc.cards[1].numero!, comboMaxPc.cards[2].numero!);
                     if (valoreCheNonCoppiaUtente > valoreCheNonCoppiaPC) {
                         this.punteggioUtene++;
+                        this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
                     }
                     else if (valoreCheNonCoppiaUtente < valoreCheNonCoppiaPC) {
                         this.punteggioPc++;
+                        this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;
                     }
                 }
 
@@ -243,7 +264,7 @@ export class Poker3 {
                 this.controlloCartaAlta(comboMaxUtente, comboMaxPc);
                 break;
             }
-            
+
         }
 
 
@@ -255,17 +276,21 @@ export class Poker3 {
     controllaComboScala(comboMaxUtente: CombinazioneMax, comboMaxPc: CombinazioneMax) {
         if (comboMaxUtente.cards[0].numero! > comboMaxPc.cards[0].numero!) {
             this.punteggioUtene++;
+            this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
         }
         else if (comboMaxUtente.cards[0].numero! < comboMaxPc.cards[0].numero!) {
             this.punteggioPc++;
+            this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;
         }
         else if (comboMaxUtente.cards[0].numero! == comboMaxPc.cards[0].numero!) {
             if (comboMaxUtente.cards[0].numero == 2) {
                 if (comboMaxUtente.cards[comboMaxUtente.cards.length - 1].numero! < comboMaxPc.cards[comboMaxPc.cards.length - 1].numero!) {
                     this.punteggioUtene++;
+                    this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
                 }
                 else {
                     this.punteggioPc++;
+                    this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;
                 }
             }
         }
@@ -274,14 +299,17 @@ export class Poker3 {
         for (let i = comboMaxUtente.cards.length - 1; i >= 0; i--) {
             if (comboMaxUtente.cards[i].numero! > comboMaxPc.cards[i].numero!) {
                 this.punteggioUtene++;
+                this.stringaComboRound= "l'Utente con " + comboMaxUtente.nomeCombo;
                 break;
             }
             if (comboMaxUtente.cards[i].numero! < comboMaxPc.cards[i].numero!) {
                 this.punteggioPc++;
+                this.stringaComboRound="il PC con " +comboMaxPc.nomeCombo ;
                 break;
             }
         }
     }
+
 }
 
 
