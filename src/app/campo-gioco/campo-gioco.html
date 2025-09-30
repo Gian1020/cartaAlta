@@ -3,9 +3,7 @@
         <div class="mano">
             @for(carta of cartePc; track $index){
             @if(carta.numero !== undefined && carta.simbolo!==undefined){
-                <div class="carta-front">
-                    <img src="{{carta.code}}.png" alt="">
-                </div>
+            <img class="immagine-carta" src="{{carta.code}}.png" alt="cartaPc = carta.code">
             }}
         </div>
 
@@ -38,17 +36,13 @@
         @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
         <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
         }
-
-
     </div>
+    
     <div class="contitoreCard">
         <div class="mano">
             @for(carta of carteUtente; track $index){
             @if(carta.numero!=undefined && carta.simbolo!=undefined){
-
-            <div class="carta-front">
-               <img src="{{carta.code}}.png" alt="">
-            </div>
+            <img class="immagine-carta" src="{{carta.code}}.png" alt="cartaUtente = carta.code">
             }}
         </div>
         @switch (flagVincitore){

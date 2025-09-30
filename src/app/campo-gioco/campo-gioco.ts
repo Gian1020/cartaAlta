@@ -100,21 +100,23 @@ export class CampoGioco {
 
     this.cartePc = this.poker.cartePc;
 
-    if (this.poker.flagWinnerRound != 3) {
-      //var che rappresenta la carta utente 
-      this.punteggioUtente = this.poker.punteggioUtene;
+    //var che rappresenta la carta utente 
+    this.punteggioUtente = this.poker.punteggioUtene;
 
-      //var che rappresenta la carta PC
-      this.punteggioPc = this.poker.punteggioPc;
-    }
+    //var che rappresenta la carta PC
+    this.punteggioPc = this.poker.punteggioPc;
+    
 
     //variabile che rappresenta il vincitore
     this.flagVincitore = this.poker.flagVincitorePartita;
 
 
     //variabile che rappresenta il vincitore
-    this.punteggioVincitore = this.poker.chiHaVinto;
+    this.punteggioVincitore = this.poker.punteggioVincitore;
     this.vincitore = this.poker.chiHaVinto;
+    this.country = this.poker.country;
+
+    this.numeroCarteVisualizzazioneMazzo=this.poker.numeroCarteVisualizzazioneMazzo
 
     this.classeCard=this.poker.classeCard;
   }
@@ -136,14 +138,10 @@ export class CampoGioco {
     //array per far vedere che il mazzo sta diminuendo
     //this.numeroCarteVisualizzazioneMazzo
 
-    
-
     this.condizione = this.mazzo.length;
 
-    this.valoreCondizione = 6;
+    this.valoreCondizione = 8;
   }
-
-
 
   creaCarte() {
     for (let semi = 0; semi < 4; semi++) {
