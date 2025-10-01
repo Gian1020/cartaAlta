@@ -15,6 +15,8 @@ export class CampoGioco {
   mazzo: Card[] = [];
   classeCard!: string;
 
+  contatoreClick!:number;
+
   //var che rappresenta la carta utente 
   carteUtente!: Card[];
   numeroCartaPc!: number | undefined;
@@ -33,6 +35,7 @@ export class CampoGioco {
   punteggioVincitore!: string;
   vincitore!: string;
   country!:string;
+  commentoVincitoreRound!:string;
 
   //variabile funzione click mazzo
   funzione!: any;
@@ -42,17 +45,21 @@ export class CampoGioco {
 
   condizione!: number;
 
-  valoreCondizione!: number;
+  valoreCondizioneBloccoClick!: number;
 
   logica: string = '';
+
+
 
   constructor(
     private router: Router,
     public cartaAlta: CartaAlta,
     public poker: Poker3
-  ) { }
+  ) {}
 
   aggiornaCartaAlta() {
+    //var che conta il click dell Utente
+    this.contatoreClick=this.cartaAlta.contatoreClick;
 
     //var che rappresenta le carte del utente
     this.carteUtente = this.cartaAlta.cartaUtente;
@@ -74,6 +81,8 @@ export class CampoGioco {
     this.vincitore = this.cartaAlta.vincitore;
     this.country = this.cartaAlta.country;
 
+    this.commentoVincitoreRound= this.cartaAlta.commentoVincitoreRound;
+
     //array per far vedere che il mazzo sta diminuendo
     this.numeroCarteVisualizzazioneMazzo = this.cartaAlta.numeroCarteVisualizzazioneMazzo;
 
@@ -91,21 +100,28 @@ export class CampoGioco {
 
     this.condizione = this.mazzo.length;
 
-    this.valoreCondizione = 0;
+    this.valoreCondizioneBloccoClick = 0;
   }
 
 
   aggiornaPoker() {
+
+    //var che conta il click dell Utente
+    this.contatoreClick=this.poker.contatoreClick;
+
+    //var che rappresenta le carte Utente
     this.carteUtente = this.poker.carteUtente;
 
+    //var che rappresenta le carte PC
     this.cartePc = this.poker.cartePc;
 
-    //var che rappresenta la carta utente 
+    //var che rappresenta il punteggio utente 
     this.punteggioUtente = this.poker.punteggioUtene;
 
-    //var che rappresenta la carta PC
+    //var che rappresenta il punteggio PC
     this.punteggioPc = this.poker.punteggioPc;
     
+    this.commentoVincitoreRound=this.poker.commentoVincitoreRound
 
     //variabile che rappresenta il vincitore
     this.flagVincitore = this.poker.flagVincitorePartita;
@@ -140,7 +156,7 @@ export class CampoGioco {
 
     this.condizione = this.mazzo.length;
 
-    this.valoreCondizione = 8;
+    this.valoreCondizioneBloccoClick = 8;
   }
 
   creaCarte() {

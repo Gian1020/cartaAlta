@@ -11,7 +11,11 @@
   position: relative;
   width: 100%;
   height: calc(100%/3);
+  display: flex;
   align-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  
 
 }
 
@@ -20,7 +24,6 @@
   box-sizing: border-box;
   width: 170px;
   height: 220px;
-  border-radius: 17px;
   text-align: center;
   cursor: pointer;
   transition: all 0.5s;
@@ -33,8 +36,7 @@
   top: 0px;
   left: 0px;
   z-index: 12;
-  box-shadow: 2px 4px 4px rgba(0,0,0,0.05);
-  backdrop-filter: blur(2px);
+  box-shadow:2px 4px 4px rgba(0,0,0,0.05);
 }
 
 .mazzo:nth-child(2) {
@@ -42,7 +44,6 @@
   left: 1.5px;
   z-index: 11;
   box-shadow: 3px 5px 6px rgba(0,0,0,0.08);
-  backdrop-filter: blur(2.5px);
 }
 
 .mazzo:nth-child(3) {
@@ -50,7 +51,6 @@
   left: 3px;
   z-index: 10;
   box-shadow: 3px 6px 8px rgba(0,0,0,0.10);
-  backdrop-filter: blur(3px);
 }
 
 .mazzo:nth-child(4) {
@@ -58,7 +58,6 @@
   left: 4.5px;
   z-index: 9;
   box-shadow: 4px 7px 10px rgba(0,0,0,0.12);
-  backdrop-filter: blur(3.5px);
 }
 
 .mazzo:nth-child(5) {
@@ -66,7 +65,7 @@
   left: 6px;
   z-index: 8;
   box-shadow: 4px 8px 12px rgba(0,0,0,0.14);
-  backdrop-filter: blur(4px);
+  
 }
 
 .mazzo:nth-child(6) {
@@ -74,7 +73,6 @@
   left: 7.5px;
   z-index: 7;
   box-shadow: 5px 8px 14px rgba(0,0,0,0.16);
-  backdrop-filter: blur(4.5px);
 }
 
 .mazzo:nth-child(7) {
@@ -82,7 +80,7 @@
   left: 9px;
   z-index: 6;
   box-shadow: 5px 9px 16px rgba(0,0,0,0.19);
-  backdrop-filter: blur(5px);
+  
 }
 
 .mazzo:nth-child(8) {
@@ -90,7 +88,6 @@
   left: 10.5px;
   z-index: 5;
   box-shadow: 5px 10px 18px rgba(0,0,0,0.21);
-  backdrop-filter: blur(5.5px);
 }
 
 .mazzo:nth-child(9) {
@@ -98,7 +95,6 @@
   left: 12px;
   z-index: 4;
   box-shadow: 6px 10px 20px rgba(0,0,0,0.24);
-  backdrop-filter: blur(5.8px);
 }
 
 .mazzo:nth-child(10) {
@@ -106,7 +102,6 @@
   left: 13.5px;
   z-index: 3;
   box-shadow: 6px 10px 23px rgba(0,0,0,0.27);
-  backdrop-filter: blur(6px);
 }
 
 .mazzo:nth-child(11) {
@@ -114,7 +109,6 @@
   left: 15px;
   z-index: 2;
   box-shadow: 6px 10px 26px rgba(0,0,0,0.31);
-  backdrop-filter: blur(6px);
 }
 
 .mazzo:nth-child(12) {
@@ -122,7 +116,12 @@
   left: 16.5px;
   z-index: 1;
   box-shadow: 6px 10px 30px rgba(0,0,0,0.35);
-  backdrop-filter: blur(6px);
+}
+.mazzo:nth-child(13) {
+  top: 18px;
+  left: 18px;
+  z-index: 0;
+  box-shadow: 6px 10px 34px rgba(0,0,0,0.39);
 }
 
 
@@ -135,6 +134,20 @@
 
 .mazzo:first-child:active {
   transform: scale(0.95) rotateZ(1.7deg);
+}
+
+#cont-vignetta{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#vignetta{
+  background-color: white;
+  border:2px solid black;
+  border-radius: 15px;
+  padding: 30px;
+
 }
 
 .contitoreCard {

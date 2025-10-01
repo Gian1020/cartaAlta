@@ -17,6 +17,7 @@ export class CartaAlta {
   country!: string;
   punteggioVincitore!: string;
   classeCard: string = "";
+  commentoVincitoreRound!: string;
 
   distribuisciCarta(mazzo: Card[]) {
     if (mazzo.length === 0) return;
@@ -28,11 +29,13 @@ export class CartaAlta {
     const cartaU = mazzo.shift()!;
     this.cartaUtente.push(cartaU);
     this.registroCarteUtente.push(cartaU);
-    
+
     // carta pc
     const cartaP = mazzo.shift()!;
     this.cartaPc.push(cartaP);
     this.registroCartePc.push(cartaP);
+
+
 
     this.sfoltisciMazzo();
     this.checkWinnerRound(this.cartaUtente[this.cartaUtente.length - 1], this.cartaPc[this.cartaPc.length - 1]);
@@ -47,20 +50,24 @@ export class CartaAlta {
   checkWinnerRound(carta1: Card, carta2: Card) {
 
     if (carta1.numero! > carta2.numero!) {
+      this.commentoVincitoreRound = "Ha vinto Utente con " + carta1.numero;
       this.punteggio1++;
 
     }
     else if (carta1.numero! === carta2.numero!) {
       if (carta1.simbolo! > carta2.simbolo!) {
+        this.commentoVincitoreRound = "Ha vinto Utente con " + carta1.numero;
         this.punteggio1++;
 
       }
       else {
+        this.commentoVincitoreRound = "Ha vinto Pc con " + carta2.numero;
         this.punteggio2++;
 
       }
     }
     else {
+      this.commentoVincitoreRound = "Ha vinto Pc con " + carta2.numero;
       this.punteggio2++;
 
     }

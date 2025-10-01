@@ -29,15 +29,20 @@
 
     </div>
     <div id="mazzo-wrapper">
-        @if(this.mazzo.length > valoreCondizione){
+        @if(mazzo.length > valoreCondizioneBloccoClick){
         <div class="mazzo" (click)="funzione()"><img class="card-back" src="/carte-poker-retro.jpg"
                 alt="background carta"></div>
         }
         @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
         <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
         }
+        @if(contatoreClick > 0){
+        <div id="cont-vignetta">
+            <div id="vignetta">{{commentoVincitoreRound}}</div>
+        </div>
+        }
     </div>
-    
+
     <div class="contitoreCard">
         <div class="mano">
             @for(carta of carteUtente; track $index){
