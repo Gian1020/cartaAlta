@@ -1,2 +1,20 @@
-<div style="height: 50px; width: 50px; background-color: blue;" (click) = "inizioGioco('cartaAlta')"></div>
-<div style="height: 50px; width: 50px; background-color: rgb(176, 85, 28);" (click) = "inizioGioco('poker3')"></div>
+<div class="nav">
+    <h1 id="titolo">♦ Casino Fate il Vostro Giuoco ♥</h1>
+</div>
+
+<div class="contenitoreCard">
+    <div class="card">
+        <div class="card-details">
+            <p class="text-title">Poker </p>
+            <p class="text-body">a 3 carte</p>
+        </div>
+        <button class="card-button" (click)="inizioGioco('cartaAlta')">Inizia</button>
+    </div>
+    <div class="card">
+        <div class="card-details">
+            <p class="text-title">Card title</p>
+            <p class="text-body">Here are the details of the card</p>
+        </div>
+        <button class="card-button" (click)="inizioGioco('poker3')">Inizia</button>
+    </div>
+</div>
