@@ -3,7 +3,7 @@
         <div class="mano">
             @for(carta of cartePc; track $index){
             @if(carta.numero !== undefined && carta.simbolo!==undefined){
-            <img class="immagine-carta" src="{{carta.code}}.png" alt="cartaPc = carta.code">
+            <img class="immagine-carta" src="carteFrancesi/{{carta.code}}.png" alt="cartaPc = carta.code">
             }}
         </div>
 
@@ -30,11 +30,11 @@
     </div>
     <div id="mazzo-wrapper">
         @if(mazzo.length > valoreCondizioneBloccoClick){
-        <div class="mazzo" (click)="funzione()"><img class="card-back" src="/carte-poker-retro.jpg"
+        <div class="mazzo" (click)="funzione()"><img class="card-back" src="carteFrancesi/carte-poker-retro.jpg"
                 alt="background carta"></div>
         }
         @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
-        <div class="mazzo"><img src="/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
+        <div class="mazzo"><img src="carteFrancesi/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
         }
         @if(contatoreClick > 0){
         <div id="cont-vignetta">
@@ -47,7 +47,7 @@
         <div class="mano">
             @for(carta of carteUtente; track $index){
             @if(carta.numero!=undefined && carta.simbolo!=undefined){
-            <img class="immagine-carta" src="{{carta.code}}.png" alt="cartaUtente = carta.code">
+            <img class="immagine-carta" src="carteFrancesi/{{carta.code}}.png" alt="cartaUtente = carta.code">
             }}
         </div>
         @switch (flagVincitore){

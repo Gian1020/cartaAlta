@@ -19,6 +19,14 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/immaginiCarteHome"
+              },
+              {
+                "glob": "**/*",
+                "input": "public/carteFrancesi"
               }
             ],
             "styles": [
