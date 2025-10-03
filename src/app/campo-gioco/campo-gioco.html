@@ -1,10 +1,34 @@
 <div id="contenitoreGenerale">
     <div class="contitoreCard">
         <div class="mano">
+            @if(logica=="cartaAlta"){
+            <div class="button-container">
+                <button class="button-3d">
+                    <div class="button-top" >
+                        <span class="material-icons">❮</span>
+                    </div>
+                    <div class="button-bottom"></div>
+                    <div class="button-base"></div>
+                </button>
+            </div>
+            <!-- (click)="indexIndietro()" -->
+            }
             @for(carta of cartePc; track $index){
-            @if(carta.numero !== undefined && carta.simbolo!==undefined){
+            @if(carta.numero !== undefined && carta.seme!==undefined){
             <img class="immagine-carta" src="carteFrancesi/{{carta.code}}.png" alt="cartaPc = carta.code">
             }}
+            @if(logica=="cartaAlta"){
+            <div class="button-container">
+                <button class="button-3d">
+                    <div class="button-top">
+                        <span class="material-icons">❯</span>
+                    </div>
+                    <div class="button-bottom"></div>
+                    <div class="button-base" ></div>
+                </button>
+            </div>
+            }
+            <!-- (click)="indexAvanti()" -->
         </div>
 
         @if(flagVincitore==0){
@@ -34,7 +58,8 @@
                 alt="background carta"></div>
         }
         @for(carte of numeroCarteVisualizzazioneMazzo; track $index){
-        <div class="mazzo"><img src="carteFrancesi/carte-poker-retro.jpg" class="card-back" alt="background carta" /></div>
+        <div class="mazzo"><img src="carteFrancesi/carte-poker-retro.jpg" class="card-back" alt="background carta" />
+        </div>
         }
         @if(contatoreClick > 0){
         <div id="cont-vignetta">
@@ -45,10 +70,33 @@
 
     <div class="contitoreCard">
         <div class="mano">
+            @if(logica=="cartaAlta"){
+            <div class="button-container">
+                <button class="button-3d">
+                    <div class="button-top">
+                        <span class="material-icons">❮</span>
+                    </div>
+                    <div class="button-bottom"></div>
+                    <div class="button-base"></div>
+                </button>
+            </div>
+            }
             @for(carta of carteUtente; track $index){
-            @if(carta.numero!=undefined && carta.simbolo!=undefined){
+            @if(carta.numero!=undefined && carta.seme!=undefined){
             <img class="immagine-carta" src="carteFrancesi/{{carta.code}}.png" alt="cartaUtente = carta.code">
             }}
+            @if(logica=="cartaAlta"){
+            <div class="button-container">
+                <button class="button-3d">
+                    <div class="button-top">
+                        <span class="material-icons">❯</span>
+                    </div>
+                    <div class="button-bottom"></div>
+                    <div class="button-base"></div>
+                </button>
+            </div>
+            }
+
         </div>
         @switch (flagVincitore){
         @case(0){
@@ -68,7 +116,7 @@
                 </div>
             </div>
         </div>}
-        @default
+        @case(-1)
         {
         <div class="card cardWinner" [class]="classeCard">
             <svg xml:space="preserve" style="enable-background: new 0 0 16 16" viewBox="0 0 16 16" y="0px" x="0px"
@@ -89,8 +137,9 @@
                     <span class="countryWinner">{{country}}</span>
                 </div>
             </div>
-        </div>}
+        </div>
         }
+    }
     </div>
 
 

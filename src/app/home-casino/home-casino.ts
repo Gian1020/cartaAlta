@@ -20,6 +20,10 @@ private router = inject(Router);
       this.router.navigate(['/poker3']);
       break;
 
+    case'blackJack':
+      this.router.navigate(['/blackJack']);
+      break;
+    
     default:
       this.router.navigate(['']);
     }

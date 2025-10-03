@@ -1,5 +1,5 @@
 export interface Card {
     numero?:number;
-    simbolo?:number;
+    seme?:number;
     code?:string;
 }

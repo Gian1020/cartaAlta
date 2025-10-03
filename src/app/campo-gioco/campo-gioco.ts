@@ -3,6 +3,7 @@ import { Card } from './interfaccia/Card';
 import { CartaAlta } from '../logicaCarte/carta-alta';
 import { Poker3 } from '../logicaCarte/poker3';
 import { Router } from '@angular/router';
+import { BlackJack } from '../logicaCarte/black-jack';
 
 @Component({
   selector: 'app-campo-gioco',
@@ -15,18 +16,18 @@ export class CampoGioco {
   mazzo: Card[] = [];
   classeCard!: string;
 
-  contatoreClick!:number;
+  contatoreClick!: number;
 
   //var che rappresenta la carta utente 
   carteUtente!: Card[];
-  numeroCartaPc!: number | undefined;
-  semeCartaPc!: number | undefined;
+  numeroCartaPc!: number;
+  semeCartaPc!: number;
   punteggioUtente!: number;
 
   //var che rappresenta la carta PC
   cartePc!: Card[];
-  semeCartaUtente!: number | undefined;
-  numeroCartaUtente!: number | undefined;
+  semeCartaUtente!: number;
+  numeroCartaUtente!: number;
   punteggioPc!: number;
 
   //variabile che rappresenta il vincitore
@@ -34,8 +35,8 @@ export class CampoGioco {
 
   punteggioVincitore!: string;
   vincitore!: string;
-  country!:string;
-  commentoVincitoreRound!:string;
+  country!: string;
+  commentoVincitoreRound!: string;
 
   //variabile funzione click mazzo
   funzione!: any;
@@ -54,12 +55,15 @@ export class CampoGioco {
   constructor(
     private router: Router,
     public cartaAlta: CartaAlta,
-    public poker: Poker3
-  ) {}
+    public poker: Poker3,
+    public bj:BlackJack
+  ) { }
 
+
+  //cartaAlta
   aggiornaCartaAlta() {
     //var che conta il click dell Utente
-    this.contatoreClick=this.cartaAlta.contatoreClick;
+    this.contatoreClick = this.cartaAlta.contatoreClick;
 
     //var che rappresenta le carte del utente
     this.carteUtente = this.cartaAlta.cartaUtente;
@@ -81,7 +85,7 @@ export class CampoGioco {
     this.vincitore = this.cartaAlta.vincitore;
     this.country = this.cartaAlta.country;
 
-    this.commentoVincitoreRound= this.cartaAlta.commentoVincitoreRound;
+    this.commentoVincitoreRound = this.cartaAlta.commentoVincitoreRound;
 
     //array per far vedere che il mazzo sta diminuendo
     this.numeroCarteVisualizzazioneMazzo = this.cartaAlta.numeroCarteVisualizzazioneMazzo;
@@ -103,11 +107,12 @@ export class CampoGioco {
     this.valoreCondizioneBloccoClick = 0;
   }
 
+  //Poker
 
   aggiornaPoker() {
 
     //var che conta il click dell Utente
-    this.contatoreClick=this.poker.contatoreClick;
+    this.contatoreClick = this.poker.contatoreClick;
 
     //var che rappresenta le carte Utente
     this.carteUtente = this.poker.carteUtente;
@@ -120,8 +125,8 @@ export class CampoGioco {
 
     //var che rappresenta il punteggio PC
     this.punteggioPc = this.poker.punteggioPc;
-    
-    this.commentoVincitoreRound=this.poker.commentoVincitoreRound
+
+    this.commentoVincitoreRound = this.poker.commentoVincitoreRound
 
     //variabile che rappresenta il vincitore
     this.flagVincitore = this.poker.flagVincitorePartita;
@@ -132,16 +137,19 @@ export class CampoGioco {
     this.vincitore = this.poker.chiHaVinto;
     this.country = this.poker.country;
 
-    this.numeroCarteVisualizzazioneMazzo=this.poker.numeroCarteVisualizzazioneMazzo
+    this.numeroCarteVisualizzazioneMazzo = this.poker.numeroCarteVisualizzazioneMazzo
 
-    this.classeCard=this.poker.classeCard;
+    this.classeCard = this.poker.classeCard;
   }
 
   caricaLogicaPoker3() {
-
-    console.log(this.poker);
-
     this.aggiornaPoker();
+     //var che rappresenta le carte Utente
+    this.carteUtente = this.poker.carteUtente;
+
+    //var che rappresenta le carte PC
+    this.cartePc = this.poker.cartePc;
+
 
     //funzione per click distribuzione carte
     this.funzione = () => {
@@ -159,76 +167,91 @@ export class CampoGioco {
     this.valoreCondizioneBloccoClick = 8;
   }
 
+  //blackJack
+
+  caricaLogicaBlackJack(){
+      //var che rappresenta le carte Utente
+    this.carteUtente = this.bj.carteUtente;
+
+    //var che rappresenta le carte PC
+    this.cartePc = this.bj.cartePc;
+
+    this.valoreCondizioneBloccoClick=0;
+    this.funzione = () => {
+      this.bj.distribuisci(this.mazzo);
+    }
+  }
+
   creaCarte() {
     for (let semi = 0; semi < 4; semi++) {
       for (let numeri = 2; numeri <= 14; numeri++) {
-        let carta: Card = { numero: numeri, simbolo: semi};
-        if(carta.simbolo==0){
-          if(carta.numero==14){
-            carta.code="AS";
+        let carta: Card = { numero: numeri, seme: semi };
+        if (carta.seme == 0) {
+          if (carta.numero == 14) {
+            carta.code = "AS";
           }
-          else if(carta.numero == 13){
-            carta.code="KS";
+          else if (carta.numero == 13) {
+            carta.code = "KS";
           }
-          else if(carta.numero== 12){
-            carta.code="QS";
+          else if (carta.numero == 12) {
+            carta.code = "QS";
           }
-          else if(carta.numero==11){
+          else if (carta.numero == 11) {
             carta.code = "JS";
           }
-          else if(carta.numero! > 1 && carta.numero! < 11){
-            carta.code = carta.numero+"S";
+          else if (carta.numero! > 1 && carta.numero! < 11) {
+            carta.code = carta.numero + "S";
           }
         }
-        else if(carta.simbolo==1){
-          if(carta.numero==14){
-            carta.code="AC";
+        else if (carta.seme == 1) {
+          if (carta.numero == 14) {
+            carta.code = "AC";
           }
-          else if(carta.numero == 13){
-            carta.code="KC";
+          else if (carta.numero == 13) {
+            carta.code = "KC";
           }
-          else if(carta.numero== 12){
-            carta.code="QC";
+          else if (carta.numero == 12) {
+            carta.code = "QC";
           }
-          else if(carta.numero==11){
+          else if (carta.numero == 11) {
             carta.code = "JC";
           }
-          else if(carta.numero! > 1 && carta.numero! < 11){
-            carta.code = carta.numero+"C";
+          else if (carta.numero! > 1 && carta.numero! < 11) {
+            carta.code = carta.numero + "C";
           }
         }
-        else if(carta.simbolo==2){
-          if(carta.numero==14){
+        else if (carta.seme == 2) {
+          if (carta.numero == 14) {
             carta.code = "AD";
           }
-          else if(carta.numero == 13){
+          else if (carta.numero == 13) {
             carta.code = "KD";
           }
-          else if(carta.numero== 12){
+          else if (carta.numero == 12) {
             carta.code = "QD";
           }
-          else if(carta.numero==11){
+          else if (carta.numero == 11) {
             carta.code = "JD";
           }
-          else if(carta.numero! > 1 && carta.numero! < 11){
-            carta.code = carta.numero+"D";
+          else if (carta.numero! > 1 && carta.numero! < 11) {
+            carta.code = carta.numero + "D";
           }
         }
-        else{
-          if(carta.numero==14){
-            carta.code="AH";
+        else {
+          if (carta.numero == 14) {
+            carta.code = "AH";
           }
-          else if(carta.numero == 13){
-            carta.code="KH";
+          else if (carta.numero == 13) {
+            carta.code = "KH";
           }
-          else if(carta.numero== 12){
-            carta.code="QH";
+          else if (carta.numero == 12) {
+            carta.code = "QH";
           }
-          else if(carta.numero==11){
+          else if (carta.numero == 11) {
             carta.code = "JH";
           }
-          else if(carta.numero! > 1 && carta.numero! < 11){
-            carta.code = carta.numero+"H";
+          else if (carta.numero! > 1 && carta.numero! < 11) {
+            carta.code = carta.numero + "H";
           }
         }
         this.mazzo.push(carta);
@@ -245,18 +268,31 @@ export class CampoGioco {
     }
   }
   ngOnInit() {
-    this.creaCarte();
-    this.mischia();
-
     const currentRoute = this.router.url;
 
     if (currentRoute.includes('cartaAlta')) {
+      this.creaCarte();
+      this.mischia();
       this.logica = 'cartaAlta';
       this.caricaLogicaCartaAlta();
     }
+
     else if (currentRoute.includes('poker3')) {
+      this.creaCarte();
+      this.mischia();
       this.logica = 'poker3';
       this.caricaLogicaPoker3();
+    }
+    else if(currentRoute.includes('blackJack')){
+      this.creaCarte();
+      this.creaCarte();
+      this.creaCarte();
+      this.creaCarte();
+      this.creaCarte();
+      this.creaCarte();
+      this.creaCarte();
+      this.mischia();
+      this.caricaLogicaBlackJack()
     }
   }
 }

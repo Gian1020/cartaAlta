@@ -153,7 +153,7 @@ export class Poker3 {
     controlloSimbolo(mano: Card[]): boolean {
         let contatore: number = 0;
         for (let i = 0; i < mano.length - 1; i++) {
-            if ((mano[i].simbolo ?? 0) == (mano[i + 1].simbolo ?? 0)) {
+            if ((mano[i].seme ?? 0) == (mano[i + 1].seme ?? 0)) {
                 contatore++
             }
         }
@@ -165,7 +165,6 @@ export class Poker3 {
 
     vincitoreFinale() {
         if (this.contatoreClick == 8) {
-
             if (this.punteggioUtene > this.punteggioPc) {
                 this.flagVincitorePartita = 1;
                 this.chiHaVinto = "Utente";

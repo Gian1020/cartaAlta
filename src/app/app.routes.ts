@@ -12,4 +12,7 @@ export const routes: Routes = [{
   },{
     path: 'poker3',
     component: CampoGioco
+  },{
+    path: 'blackJack',
+    component: CampoGioco
   }];
